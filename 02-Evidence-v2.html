@@ -364,6 +364,360 @@ html, body {
 .mb12 { margin-bottom: 12px; }
 .flex-row { display: flex; align-items: center; gap: 8px; }
 .text-muted  { color: var(--t-tertiary); }
+.text-green  { color: #16a34a; }
+.text-amber  { color: #b45309; }
+.text-blue   { color: #1d4ed8; }
+.text-red    { color: #D3222A; }
+.fw600 { font-weight: 600; }
+.fz11  { font-size: 11px; }
+.fz12  { font-size: 12px; }
+
+/* ============================================================
+   SCREEN 1 — Evidence collection complete (from 02-Evidence-3)
+   ============================================================ */
+
+/* Screen background gradient */
+#screen-1 {
+  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(114,252,170,0.28) 0%, transparent 65%), var(--bg-base);
+}
+
+/* Agent block */
+.agent-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  color: var(--t-tertiary);
+  text-transform: uppercase;
+}
+.agent-label.orange    { color: #ea580c; }
+.agent-label.synth     { color: #7c3aed; }
+.agent-label.grc       { color: #1d4ed8; }
+.agent-label.forensic  { color: #ea580c; }
+.agent-label.confidence { color: #16a34a; }
+.agent-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--t-primary);
+  line-height: 1.4;
+}
+.agent-subtitle { font-size: 12px; color: var(--t-tertiary); }
+.agent-body {
+  font-size: 13px;
+  color: var(--t-secondary);
+  line-height: 1.6;
+}
+.agent-msg {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.agent-text { font-size: 13px; color: var(--t-secondary); line-height: 1.6; }
+.agent-text p { margin: 0 0 8px; }
+.agent-text p:last-child { margin-bottom: 0; }
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 20px;
+}
+.badge-red    { background: rgba(211,34,42,0.08);  color: #D3222A; border: 1px solid rgba(211,34,42,0.2); }
+.badge-green  { background: rgba(22,163,74,0.08);  color: #16a34a; border: 1px solid rgba(22,163,74,0.2); }
+.badge-blue   { background: rgba(29,78,216,0.08);  color: #1d4ed8; border: 1px solid rgba(29,78,216,0.2); }
+.badge-amber  { background: rgba(180,83,9,0.08);   color: #b45309; border: 1px solid rgba(180,83,9,0.2); }
+.badge-orange { background: rgba(234,88,12,0.08);  color: #ea580c; border: 1px solid rgba(234,88,12,0.2); }
+.badge-muted  { background: #f4f4f5; color: var(--t-tertiary); border: 1px solid var(--border); }
+
+/* Toggle */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.toggle-row:last-child { border-bottom: none; }
+.toggle-label { flex: 1; font-size: 14px; color: var(--t-secondary); }
+.toggle-rec { font-size: 10px; color: #16a34a; font-weight: 600; }
+.toggle {
+  width: 36px;
+  height: 20px;
+  background: #16a34a;
+  border-radius: 10px;
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.toggle.off { background: #e4e4e7; border: 1px solid var(--border); }
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  top: 2px;
+  right: 2px;
+  transition: left 0.2s cubic-bezier(0.34,1.56,0.64,1), right 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+.toggle.off::after { right: auto; left: 2px; background: #a1a1aa; }
+
+/* Scope table */
+.scope-table { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.scope-row { display: flex; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.scope-row:last-child { border-bottom: none; }
+.scope-key { width: 160px; flex-shrink: 0; color: var(--t-tertiary); font-size: 14px; font-weight: 600; }
+.scope-val { flex: 1; color: var(--t-secondary); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+
+/* Scope pills */
+.pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+.scope-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; padding: 4px 10px; border-radius: 20px;
+  background: rgba(22,163,74,0.08); border: 1px solid rgba(22,163,74,0.2); color: #16a34a;
+}
+.scope-pill.off { background: #f4f4f5; border-color: var(--border); color: var(--t-tertiary); text-decoration: line-through; }
+
+/* Warn box */
+.warn-box {
+  background: rgba(251,191,36,0.06);
+  border: 1px solid rgba(180,83,9,0.18);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.warn-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; color: #92400e; }
+.warn-content { flex: 1; }
+.warn-title { font-size: 13px; font-weight: 600; color: #92400e; margin-bottom: 4px; }
+.warn-body  { font-size: 12px; color: var(--t-tertiary); line-height: 1.5; }
+.warn-btn {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px; font-weight: 600;
+  color: #92400e;
+  background: rgba(251,191,36,0.08);
+  border: 1px solid rgba(180,83,9,0.18);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* Info box */
+.info-box {
+  background: rgba(29,78,216,0.04);
+  border: 1px solid rgba(29,78,216,0.15);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.info-content { flex: 1; font-size: 12px; color: var(--t-secondary); line-height: 1.5; }
+.info-content strong { color: #1d4ed8; }
+.info-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px; font-weight: 600;
+  color: #1d4ed8;
+  background: rgba(29,78,216,0.06);
+  border: 1px solid rgba(29,78,216,0.18);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* Evidence tag variants */
+.ev-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 400; font-family: var(--font);
+  line-height: 1.4;
+  padding: 6px 14px 6px 10px; border-radius: 9999px; border: 1px solid;
+  color: #000000;
+}
+.ev-tag svg { flex-shrink: 0; }
+.ev-tag-priority { background: #ffedeb; border-color: #ee312e; }
+.ev-tag-request  { background: transparent; border-color: #A0A2A5; }
+
+/* Screen-1 hero */
+#screen-1 .ev-hero {
+  background: transparent;
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+#screen-1 .ev-hero-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+#screen-1 .ev-hero-title {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--t-primary);
+  text-align: center;
+}
+#screen-1 .ev-hero-title strong { font-weight: 700; }
+#screen-1 .ev-workflow {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-top: 20px;
+}
+#screen-1 .ev-workflow-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+}
+#screen-1 .ev-workflow-steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+#screen-1 .ev-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--t-secondary);
+  white-space: nowrap;
+}
+#screen-1 .ev-step.done  { color: var(--t-tertiary); }
+#screen-1 .ev-step.active { color: var(--t-primary); font-weight: 700; }
+#screen-1 .ev-step-circle {
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+#screen-1 .ev-step-arrow { color: var(--t-tertiary); display: flex; align-items: center; }
+
+/* Screen-1 progress bar row */
+#screen-1 .ev-progress-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border);
+}
+#screen-1 .ev-progress-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#screen-1 .ev-progress-item + .ev-progress-item {
+  padding-left: 16px;
+  border-left: 1px solid var(--border);
+  margin-left: 16px;
+}
+#screen-1 .ev-progress-label { white-space: nowrap; flex-shrink: 0; }
+#screen-1 .ev-progress-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 99px;
+  overflow: hidden;
+  min-width: 60px;
+}
+#screen-1 .ev-progress-fill {
+  height: 100%;
+  background: #22c55e;
+  border-radius: 99px;
+}
+#screen-1 .ev-progress-value { font-size: 13px; font-weight: 400; color: var(--t-tertiary); white-space: nowrap; flex-shrink: 0; }
+#screen-1 .ev-progress-bullet {
+  width: 5px; height: 5px;
+  background: var(--border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin: 0 8px;
+}
+
+/* Screen-1 status */
+#screen-1 .ev-progress-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 24px 28px;
+}
+#screen-1 .ev-status-check {
+  width: 20px; height: 20px;
+  background: #84cc16;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+#screen-1 .ev-status-check svg { width: 11px; height: 11px; color: #fff; }
+#screen-1 .ev-status-text-primary { font-size: 14px; font-weight: 600; color: var(--t-primary); }
+#screen-1 .ev-status-text-secondary { font-size: 13px; color: var(--t-secondary); line-height: 1.5; margin-top: 3px; }
+
+/* Screen-1 alerts */
+#screen-1 .ev-alert-yellow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFF2AA;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: #6A5F00;
+}
+#screen-1 .ev-alert-yellow svg { width: 24px; height: 24px; flex-shrink: 0; color: #6A5F00; }
+#screen-1 .ev-alert-green {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #D2FF9C;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+#screen-1 .ev-alert-green-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+#screen-1 .ev-alert-green-icon svg { width: 24px; height: 24px; color: #3F6900; }
+#screen-1 .ev-alert-green-body { flex: 1; }
+#screen-1 .ev-alert-green-title { font-size: 14px; font-weight: 600; color: #3F6900; }
+#screen-1 .ev-alert-green-sub { font-size: 13px; color: #3F6900; margin-top: 2px; }
+#screen-1 .ev-open-btn {
+  background: #ffffff; color: var(--ui-dark);
+  border: 1px solid var(--ui-border-strong); border-radius: 10px;
+  padding: 8px 16px; font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: var(--font);
+  white-space: nowrap; flex-shrink: 0;
+  transition: all 0.15s;
+}
+#screen-1 .ev-open-btn:hover { background: #f8fafc; border-color: var(--ui-border-strong); }
 
 </style>
 </head>
@@ -647,6 +1001,297 @@ html, body {
   </div>
 </div>
 
+<!-- ============================================================
+     SCREEN 1 — Evidence collection complete
+     ============================================================ -->
+<div class="screen" id="screen-1">
+  <div class="lt-header">
+    <div class="lt-logo">
+      <div class="lt-logo-mark"><img src="Icons/D_icon.png" alt="Diligent"></div>
+      Diligent  &middot;  Automated Audit Reporting
+    </div>
+    <div class="lt-spacer"></div>
+    <div class="lt-header-nav">
+      <div class="lt-activity-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        Recent system activity
+        <span class="lt-activity-count">5</span>
+      </div>
+      <div class="lt-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="lt-notif-dot"></span>
+      </div>
+      <div class="lt-icon-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+      </div>
+      <div class="lt-avatar">AC</div>
+    </div>
+  </div>
+
+  <div class="s-investigation-body">
+    <div class="s-left-content">
+      <div class="s-left-scroll">
+        <div class="s-scroll-inner content-gap">
+
+        <!-- Hero (02-Evidence-05) -->
+        <div class="ev-hero">
+          <div class="ev-hero-header">
+            <div class="ev-tags">
+              <span class="ev-tag ev-tag-priority">
+                <svg width="12" height="12" viewBox="0 0 9.423 11.407" fill="#d3222a">
+                  <g transform="translate(0,11.407) scale(1,-1)">
+                    <path d="M4.711 11.407 L0 6.695 L0.774 5.921 L4.711 9.867 L8.649 5.921 L9.423 6.695 L4.711 11.407Z M4.711 5.486 L0 0.774 L0.774 0 L4.711 3.946 L8.649 0 L9.423 0.774 L4.711 5.486Z"/>
+                  </g>
+                </svg>
+                High priority
+              </span>
+              <span class="ev-tag ev-tag-request">
+                <img src="Icons/Audit.svg" width="20" height="20" alt="">
+                Audit report request
+              </span>
+            </div>
+            <h1 class="ev-hero-title"><strong>Evidence collection is complete.</strong> Review and proceed.</h1>
+          </div>
+          <div class="ev-workflow">
+            <div class="ev-workflow-label">Workflow status</div>
+            <div class="ev-workflow-steps">
+              <div class="ev-step done">
+                <div class="ev-step-circle done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
+                Investigation
+              </div>
+              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="ev-step done">
+                <div class="ev-step-circle done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
+                Scope
+              </div>
+              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="ev-step done">
+                <div class="ev-step-circle done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
+                Evidence
+              </div>
+              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="ev-step">
+                <div class="ev-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+                Synthesis
+              </div>
+              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="ev-step">
+                <div class="ev-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+                Edit &amp; Authorize
+              </div>
+              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="ev-step">
+                <div class="ev-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+                Veracity scoring
+              </div>
+              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="ev-step">
+                <div class="ev-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+                Approve
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main content (02-Evidence-05) -->
+        <div class="section-gap">
+
+          <div class="section" id="ev-section-results">
+            <div class="section-title">Results</div>
+            <div class="alert-card alert-card-md alert-card-green">
+              <div class="alert-card-icon">
+                <img src="Icons/Success.svg" width="24" height="24" alt="">
+              </div>
+              <div class="alert-card-body">
+                <div class="alert-card-title">Evidence Pack assembled — 8 of 8 sources complete.</div>
+                <div class="alert-card-sub">All sources returned data. The pack has been saved to Boards as a supporting document. Review the summary below and confirm before synthesis begins.</div>
+              </div>
+            </div>
+            <div class="card-default ev-card-general-progress">
+              <div class="card-title">General progress</div>
+              <div class="card-hero-row" style="padding:16px 20px;">
+                <div class="ev-progress-row" style="width:100%;">
+                  <div class="ev-progress-item">
+                    <span class="ev-progress-label label-sm">Findings</span>
+                    <div class="ev-progress-track"><div class="ev-progress-fill" style="width:100%;background:#8EE400;"></div></div>
+                    <span class="ev-progress-count">120 / 120</span>
+                  </div>
+                  <span class="ev-progress-dot">&#9679;</span>
+                  <div class="ev-progress-item">
+                    <span class="ev-progress-label label-sm">Controls</span>
+                    <div class="ev-progress-track"><div class="ev-progress-fill" style="width:100%;background:#8EE400;"></div></div>
+                    <span class="ev-progress-count">400 / 400</span>
+                  </div>
+                  <span class="ev-progress-dot">&#9679;</span>
+                  <div class="ev-progress-item">
+                    <span class="ev-progress-label label-sm">Obligations</span>
+                    <div class="ev-progress-track"><div class="ev-progress-fill" style="width:100%;background:#8EE400;"></div></div>
+                    <span class="ev-progress-count">30 / 30</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-title" style="margin-top:16px;">Pack summary</div>
+              <div class="card-hero-row">
+                <div class="card-hero">
+                  <div class="card-hero-label label-sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    Data points
+                  </div>
+                  <div class="card-hero-value">312 <span class="card-hero-desc">total</span></div>
+                </div>
+                <div class="card-hero">
+                  <div class="card-hero-label label-sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                    Sources completed
+                  </div>
+                  <div class="card-hero-value">8 <span class="card-hero-desc">of</span> 8</div>
+                </div>
+                <div class="card-hero">
+                  <div class="card-hero-label label-sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0115-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 01-15 6.7L3 16"/></svg>
+                    Data freshness
+                  </div>
+                  <div class="card-hero-value">7 <span class="card-hero-desc">current</span> 1 <span class="card-hero-desc">recent</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section" id="ev-section-evidence-pack">
+            <div class="section-header">
+              <div class="section-title">Evidence pack collection</div>
+              <p class="section-subtitle">312 data points across 8 sources</p>
+            </div>
+
+              <div class="card-default">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="col-result text-center">Result</th>
+                      <th class="col-source">Source</th>
+                      <th class="col-records">Records</th>
+                      <th class="col-fresh text-center">Freshness</th>
+                      <th class="col-download text-center">Download pack</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="col-result text-center"><img src="Icons/Done.svg" class="row-check" alt="" style="margin:0 auto"></td>
+                      <td class="col-source">Projects — Findings &amp; Controls</td>
+                      <td class="col-records">47 findings &middot; 180 controls</td>
+                      <td class="col-fresh text-center"><span class="pill pill-sm pill-icon pill-green"><img src="Icons/Checked.svg" class="pill-ico">Current</span></td>
+                      <td class="col-download text-center"><button class="btn btn-tertiary btn-sm">Download</button></td>
+                    </tr>
+                    <tr>
+                      <td class="col-result text-center"><img src="Icons/Done.svg" class="row-check" alt="" style="margin:0 auto"></td>
+                      <td class="col-source">Frameworks — Risk Control Matrix</td>
+                      <td class="col-records">180 controls &middot; 8 ineffective</td>
+                      <td class="col-fresh text-center"><span class="pill pill-sm pill-icon pill-green"><img src="Icons/Checked.svg" class="pill-ico">Current</span></td>
+                      <td class="col-download text-center"><button class="btn btn-tertiary btn-sm">Download</button></td>
+                    </tr>
+                    <tr>
+                      <td class="col-result text-center"><img src="Icons/Done.svg" class="row-check" alt="" style="margin:0 auto"></td>
+                      <td class="col-source">ERM — Risk Register &amp; Appetite</td>
+                      <td class="col-records">22 risks &middot; 3 above appetite</td>
+                      <td class="col-fresh text-center"><span class="pill pill-sm pill-icon pill-green"><img src="Icons/Checked.svg" class="pill-ico">Current</span></td>
+                      <td class="col-download text-center"><button class="btn btn-tertiary btn-sm">Download</button></td>
+                    </tr>
+                    <tr>
+                      <td class="col-result text-center"><img src="Icons/Done.svg" class="row-check" alt="" style="margin:0 auto"></td>
+                      <td class="col-source">AI Risk Essentials — Alerts</td>
+                      <td class="col-records">15 AI alerts &middot; peer benchmarks</td>
+                      <td class="col-fresh text-center"><span class="pill pill-sm pill-icon pill-green"><img src="Icons/Checked.svg" class="pill-ico">Current</span></td>
+                      <td class="col-download text-center"><button class="btn btn-tertiary btn-sm">Download</button></td>
+                    </tr>
+                    <tr>
+                      <td class="col-result text-center"><img src="Icons/Done.svg" class="row-check" alt="" style="margin:0 auto"></td>
+                      <td class="col-source">Compliance Maps — SEC Obligations</td>
+                      <td class="col-records">12 obligations &middot; 3 gaps</td>
+                      <td class="col-fresh text-center"><span class="pill pill-sm pill-icon pill-green"><img src="Icons/Checked.svg" class="pill-ico">Current</span></td>
+                      <td class="col-download text-center"><button class="btn btn-tertiary btn-sm">Download</button></td>
+                    </tr>
+                    <tr>
+                      <td class="col-result text-center"><img src="Icons/Done.svg" class="row-check" alt="" style="margin:0 auto"></td>
+                      <td class="col-source">3rd Risk — Vendor Assessments</td>
+                      <td class="col-records">8 vendors &middot; 3 high-risk</td>
+                      <td class="col-fresh text-center"><span class="pill pill-sm pill-icon pill-yellow"><img src="Icons/Recent.svg" class="pill-ico">Recent</span></td>
+                      <td class="col-download text-center"><button class="btn btn-tertiary btn-sm">Download</button></td>
+                    </tr>
+                    <tr>
+                      <td class="col-result text-center"><img src="Icons/Done.svg" class="row-check" alt="" style="margin:0 auto"></td>
+                      <td class="col-source">Vault — Speak-up Themes</td>
+                      <td class="col-records">4 themes &middot; anonymised</td>
+                      <td class="col-fresh text-center"><span class="pill pill-sm pill-icon pill-green"><img src="Icons/Checked.svg" class="pill-ico">Current</span></td>
+                      <td class="col-download text-center"><button class="btn btn-tertiary btn-sm">Download</button></td>
+                    </tr>
+                    <tr>
+                      <td class="col-result text-center"><img src="Icons/Done.svg" class="row-check" alt="" style="margin:0 auto"></td>
+                      <td class="col-source">External Intel — Peer Enforcement</td>
+                      <td class="col-records">6 enforcement actions</td>
+                      <td class="col-fresh text-center"><span class="pill pill-sm pill-icon pill-green"><img src="Icons/Checked.svg" class="pill-ico">Current</span></td>
+                      <td class="col-download text-center"><button class="btn btn-tertiary btn-sm">Download</button></td>
+                    </tr>
+                    <tr>
+                      <td class="col-result" style="border-top:1px solid rgba(0,0,0,0.2);"></td>
+                      <td colspan="3" style="border-top:1px solid rgba(0,0,0,0.2); font-weight:600; color:var(--t-secondary);">Packs total: 8</td>
+                      <td class="col-download text-center" style="border-top:1px solid rgba(0,0,0,0.2);"><button class="btn btn-secondary btn-sm">Download all</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="table-footer">
+                  <button class="btn btn-secondary btn-md" style="border:none">Re-run a source</button>
+                  <button class="btn btn-primary btn-md" id="ev-confirm-pack-btn">Confirm Evidence pack</button>
+                </div>
+              </div>
+
+              <div class="ev-alert-yellow">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.86523 20.4999L11.9998 3L22.1343 20.4999H1.86523ZM4.44978 18.9999H19.5498L11.9998 5.99993L4.44978 18.9999ZM11.9998 17.8076C12.2286 17.8076 12.4205 17.7302 12.5753 17.5754C12.7301 17.4206 12.8075 17.2288 12.8075 16.9999C12.8075 16.7711 12.7301 16.5793 12.5753 16.4245C12.4205 16.2697 12.2286 16.1923 11.9998 16.1923C11.7709 16.1923 11.5791 16.2697 11.4243 16.4245C11.2695 16.5793 11.1921 16.7711 11.1921 16.9999C11.1921 17.2288 11.2695 17.4206 11.4243 17.5754C11.5791 17.7302 11.7709 17.8076 11.9998 17.8076ZM11.2498 15.1923H12.7498V10.1923H11.2498V15.1923Z" fill="currentColor"/></svg>
+                HITL Gate 1.5 of 3 — Confirm the evidence base before synthesis begins.
+              </div>
+
+              <div class="alert-card alert-card-md alert-card-green">
+                <div class="alert-card-icon">
+                  <img src="Icons/Success.svg" width="24" height="24" alt="">
+                </div>
+                <div class="alert-card-body">
+                  <div class="alert-card-title">Saved to Boards — Evidence Pack &middot; Cybersecurity Assurance Report</div>
+                  <div class="alert-card-sub">Available as supporting material in the Audit Committee board pack. Accessible to all members with view rights.</div>
+                </div>
+                <div class="alert-card-actions">
+                  <button class="btn btn-secondary btn-sm">Open in Boards</button>
+                </div>
+              </div>
+
+          </div>
+
+        </div><!-- /section-gap -->
+
+        </div><!-- end s-scroll-inner -->
+
+      <div class="chat-area">
+        <div class="chat-inner">
+          <div class="chat-input-row">
+            <textarea placeholder="Ask about evidence, review the pack, or re-run a source..."></textarea>
+            <div class="chat-bottom">
+              <div class="chat-chips-row">
+                <div class="chat-chip">Summarise the evidence pack</div>
+                <div class="chat-chip">Flag any gaps</div>
+                <div class="chat-chip">Re-run External Intel</div>
+              </div>
+              <div class="chat-actions">
+                <button class="btn btn-secondary btn-md">Clear</button>
+                <button class="btn btn-primary btn-md" disabled>Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- end s-left-scroll -->
+    </div><!-- end s-left-content -->
+  </div><!-- end investigation-body -->
+</div>
+
 </div><!-- end screens-wrapper -->
 
 
@@ -797,9 +1442,26 @@ html, body {
   /* ── Start after pause ── */
   setTimeout(runAnimation, PAUSE_MS);
 
-  /* ── "View results" button — navigate to 02-Evidence-3.html ── */
+  /* ── "View results" button — switch to screen 1 ── */
   viewResultBtn.addEventListener('click', function () {
-    window.location.href = '02-Evidence-3.html';
+    showScreen(1);
+  });
+})();
+
+/* ── Screen switcher ── */
+function showScreen(index) {
+  document.querySelectorAll('.screen').forEach(function(el, i) {
+    el.classList.toggle('active', i === index);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── "Confirm Evidence pack" button — navigate to Synthesis ── */
+(function () {
+  var btn = document.getElementById('ev-confirm-pack-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    window.location.href = '03-Synthesis-to-Chat.html';
   });
 })();
 </script>
