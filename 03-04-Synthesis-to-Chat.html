@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synthesis → Chat</title>
+<link rel="stylesheet" href="Components/huc-components.css">
+<link rel="stylesheet" href="Components/headers.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+
+#app-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.view {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#view-synthesis {
+  z-index: 1;
+  opacity: 1;
+  transform: translateX(0);
+}
+#view-synthesis iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+#view-chat {
+  z-index: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(24px);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0.5s;
+}
+#view-chat iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* After "Open report": synthesis slides out and fades, chat slides in and fades in */
+#app-wrapper.transition-to-chat #view-synthesis {
+  opacity: 0;
+  transform: translateX(-24px);
+  visibility: hidden;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0.5s;
+}
+#app-wrapper.transition-to-chat #view-chat {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s,
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s,
+              visibility 0s linear 0s;
+}
+</style>
+</head>
+<body>
+<div id="app-wrapper">
+  <div id="view-synthesis" class="view">
+    <iframe src="03-Synthesis.html" title="Synthesis"></iframe>
+  </div>
+  <div id="view-chat" class="view">
+    <iframe src="03-Synthesis-Edit.html" title="Chat"></iframe>
+  </div>
+</div>
+<script>
+(function() {
+  var wrapper = document.getElementById('app-wrapper');
+  var chatIframe = document.querySelector('#view-chat iframe');
+
+  function transitionToChat() {
+    wrapper.classList.add('transition-to-chat');
+    setTimeout(function() {
+      if (chatIframe && chatIframe.contentWindow) {
+        chatIframe.contentWindow.postMessage('startChat', '*');
+      }
+    }, 550);
+  }
+
+  window.addEventListener('message', function(e) {
+    if (e.data === 'openReport') {
+      transitionToChat();
+    }
+  });
+  if (window.location.hash === '#chat') {
+    transitionToChat();
+  }
+})();
+</script>
+</body>
+</html>
