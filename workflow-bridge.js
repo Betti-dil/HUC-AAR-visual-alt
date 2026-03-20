@@ -14,7 +14,8 @@
     'Authorize investigation': 1,
     'Confirm Evidence pack': 2,
     'Confirm selection and authorize': 3,
-    'Confirm and authorize': 3
+    'Confirm and authorize': 3,
+    'Confirm findings': 4
   };
 
   function hookButtons() {
@@ -33,7 +34,7 @@
       }
     });
 
-    // Special case: inject "Confirm findings" button in 05-Veracity-scoring
+    // Special case: inject "Confirm findings" button in 04-Veracity-scoring
     var alertCard = document.querySelector('.alert-card-yellow');
     if (alertCard && !document.getElementById('wf-confirm-findings')) {
       // Check we're in the right file (has veracity-related content)

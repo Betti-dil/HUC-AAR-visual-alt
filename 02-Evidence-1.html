@@ -150,14 +150,8 @@ html, body {
   position: absolute;
   inset: 0;
   flex-direction: column;
-  animation: fadeIn 0.2s ease;
 }
 .screen.active { display: flex; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
 
 /* ============================================================
    PULSE / LOADING ANIMATIONS
@@ -724,7 +718,6 @@ html, body {
   gap: 12px;
 }
 .lt-s1-page-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 40px;
   font-weight: 300;
   letter-spacing: -0.02em;

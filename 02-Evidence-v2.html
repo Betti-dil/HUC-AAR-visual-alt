@@ -92,14 +92,8 @@ html, body {
   position: absolute;
   inset: 0;
   flex-direction: column;
-  animation: fadeIn 0.2s ease;
 }
 .screen.active { display: flex; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
 
 /* ============================================================
    PULSE / LOADING ANIMATIONS
@@ -200,7 +194,6 @@ html, body {
   gap: 12px;
 }
 .lt-s1-page-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 40px;
   font-weight: 300;
   letter-spacing: -0.02em;
@@ -217,7 +210,7 @@ html, body {
 }
 .hero-title-a,
 .hero-title-b {
-  transition: opacity 0.6s ease;
+  transition: opacity 3s ease;
 }
 .hero-title-a {
   opacity: 1;
@@ -359,11 +352,6 @@ html, body {
 /* ============================================================
    MICROINTERACTIONS
    ============================================================ */
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.screen.active .card-default { animation: slideUp 0.28s ease both; }
 
 /* ============================================================
    UTILITY
