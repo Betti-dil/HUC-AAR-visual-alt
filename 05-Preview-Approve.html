@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="Components/huc-components.css">
+<link rel="stylesheet" href="Components/alert-cards.css">
 <link rel="stylesheet" href="Components/headers.css">
 <style>
 
@@ -65,7 +66,7 @@ html, body {
   background: #ffffff;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
-  z-index: 50;
+  z-index: 50; /* app header — above content, below proto-nav (100) */
 }
 .lt-logo {
   font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
@@ -138,7 +139,7 @@ html, body {
   background: #ffffff;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
-  z-index: 40;
+  z-index: 40; /* editor toolbar — below app header (50) */
   position: relative;
 }
 
@@ -159,7 +160,7 @@ html, body {
 .editor-tools-right {
   display: flex; align-items: center; gap: 4px;
   position: absolute; right: 8px;
-  z-index: 1;
+  z-index: 1; /* above sibling toolbar items */
 }
 
 /* Tool buttons */
@@ -215,7 +216,7 @@ html, body {
   background: rgba(177, 181, 199, 0.30);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  z-index: 35;
+  z-index: 35; /* action bar — below toolbar (40), above content */
 }
 .action-bar-title {
   font-size: 15px; font-weight: 600;
@@ -291,7 +292,7 @@ html, body {
   display: flex; flex-direction: column; align-items: center;
   padding: 12px 0; gap: 4px; flex-shrink: 0;
   position: relative;
-  z-index: 11;
+  z-index: 11; /* sidebar — above chat area (10) */
 }
 .lt-sidebar-icon {
   width: 36px; height: 36px; border-radius: 8px;

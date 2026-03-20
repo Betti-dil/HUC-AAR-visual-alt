@@ -1,13 +1,17 @@
 /* ============================================================
-   HUC COMPONENTS — ORG
+   HUC COMPONENTS — CORE PRIMITIVES
    Author: Bettina Szekany
    AI Partner: AI Claude Code
 
-   Consolidated design system — buttons, cards, pills, tables,
-   alert cards.
+   Core design system primitives — buttons, cards, pills, tables,
+   layout spacing, typography (section/card headers).
 
-   Chatbox with glow effect is a separate file:
-     chat-w-glow.css   — chatbox with glow effect
+   Composite components (separate files):
+     chatbox.css       — standard chatbox
+     chat-w-glow.css   — chatbox with glow effect (Sunrise-glow)
+     hero-section.css  — hero section (workflow + notification variants)
+     alert-cards.css   — alert card component
+     card-hero.css     — stat/metric hero cards
 
    CSS variables used (define in host page or :root):
      --bg-surface   — card / surface background  (fallback: #ffffff)
@@ -531,198 +535,7 @@
 
 
 /* ────────────────────────────────────────────────────────────────
-   5. ALERT CARDS
-   Classes:
-     .alert-card                 — base (always required)
-     .alert-card-md              — medium size
-     .alert-card-sm              — small size
-     .alert-card-blue            — blue color
-     .alert-card-yellow          — yellow color
-     .alert-card-red             — red color
-     .alert-card-green           — green color
-     .alert-card-transparent     — neutral / transparent
-
-   Structure (medium — uses btn-md):
-     <div class="alert-card alert-card-md alert-card-blue">
-       <div class="alert-card-icon"><!-- SVG --></div>
-       <div class="alert-card-body">
-         <div class="alert-card-title">Title</div>
-         <div class="alert-card-sub">Subtitle text</div>
-       </div>
-       <div class="alert-card-actions">
-         <button class="btn btn-secondary btn-md">Btn 1</button>
-         <button class="btn btn-primary btn-md">Btn 2</button>
-       </div>
-     </div>
-
-   Structure (small — icon + title inline):
-     <div class="alert-card alert-card-sm alert-card-blue">
-       <div class="alert-card-content">
-         <div class="alert-card-header">
-           <div class="alert-card-icon"><!-- SVG --></div>
-           <div class="alert-card-title">Title</div>
-         </div>
-         <div class="alert-card-sub">Subtitle text</div>
-       </div>
-       <div class="alert-card-actions">
-         <button class="btn btn-secondary btn-sm">Btn 1</button>
-         <button class="btn btn-primary btn-sm">Btn 2</button>
-       </div>
-     </div>
-
-   Visibility:
-     .alert-card-actions-hidden  — hides the actions area
-   ──────────────────────────────────────────────────────────────── */
-
-/* ── Base ───────────────────────────────────────────────── */
-.alert-card {
-  display: flex;
-  align-items: flex-start;
-  border: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  box-sizing: border-box;
-}
-
-/* ── Icon ───────────────────────────────────────────────── */
-.alert-card-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.alert-card-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* ── Body ───────────────────────────────────────────────── */
-.alert-card-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.alert-card-title {
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.alert-card-sub {
-  line-height: 1.5;
-}
-
-/* ── Actions ────────────────────────────────────────────── */
-.alert-card-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-  margin-left: auto;
-}
-.alert-card-actions-hidden {
-  display: none;
-}
-
-/* ── Content wrapper (used in small + actions) ──────────── */
-.alert-card-content {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-/* ── Size: medium ──────────────────────────────────────── */
-.alert-card.alert-card-md {
-  gap: 12px;
-  padding: 14px 18px;
-  border-radius: 12px;
-}
-.alert-card-md .alert-card-icon {
-  width: 24px;
-  height: 24px;
-}
-.alert-card-md .alert-card-title {
-  font-size: 14px;
-}
-.alert-card-md .alert-card-sub {
-  font-size: 14px;
-  margin-top: 2px;
-}
-.alert-card-md:has(.alert-card-actions) {
-  align-items: center;
-}
-
-/* ── Size: small ───────────────────────────────────────── */
-.alert-card.alert-card-sm {
-  flex-direction: column;
-  gap: 4px;
-  padding: 10px 14px;
-  border-radius: 10px;
-}
-.alert-card-sm .alert-card-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.alert-card-sm .alert-card-icon {
-  width: 18px;
-  height: 18px;
-}
-.alert-card-sm .alert-card-title {
-  font-size: 13px;
-}
-.alert-card-sm .alert-card-sub {
-  font-size: 13px;
-}
-.alert-card-sm:has(.alert-card-actions) {
-  flex-direction: row;
-  align-items: center;
-}
-
-/* ── Color: green ──────────────────────────────────────── */
-.alert-card-green {
-  background: #D2FF9C;
-}
-.alert-card-green .alert-card-icon  { color: #3F6900; }
-.alert-card-green .alert-card-title { color: #3F6900; }
-.alert-card-green .alert-card-sub   { color: #3F6900; }
-
-/* ── Color: blue ───────────────────────────────────────── */
-.alert-card-blue {
-  background: #D7F6FF;
-}
-.alert-card-blue .alert-card-icon  { color: #006879; }
-.alert-card-blue .alert-card-title { color: #006879; }
-.alert-card-blue .alert-card-sub   { color: #006879; }
-
-/* ── Color: yellow ─────────────────────────────────────── */
-.alert-card-yellow {
-  background: #FFF2AA;
-}
-.alert-card-yellow .alert-card-icon  { color: #6A5F00; }
-.alert-card-yellow .alert-card-title { color: #6A5F00; }
-.alert-card-yellow .alert-card-sub   { color: #6A5F00; }
-
-/* ── Color: red ────────────────────────────────────────── */
-.alert-card-red {
-  background: #FFEDEB;
-}
-.alert-card-red .alert-card-icon  { color: #921A1D; }
-.alert-card-red .alert-card-title { color: #921A1D; }
-.alert-card-red .alert-card-sub   { color: #921A1D; }
-
-/* ── Color: transparent ────────────────────────────────── */
-.alert-card-transparent {
-  background: #ffffff;
-  border: 1px solid #DADADA;
-}
-.alert-card-transparent .alert-card-icon  { color: #6F7377; }
-.alert-card-transparent .alert-card-title { color: #282E37; }
-.alert-card-transparent .alert-card-sub   { color: #6F7377; }
-
-
-/* ────────────────────────────────────────────────────────────────
-   6. CHATBOX
+   5. CHATBOX
    Standard chatbox with frosted-glass sticky footer.
 
    Classes:
@@ -775,7 +588,7 @@
   margin-left: -20px;
   margin-right: -20px;
   box-sizing: border-box;
-  z-index: 10;
+  z-index: 10; /* chat area — above scrollable content */
   isolation: isolate;
 }
 
@@ -858,67 +671,3 @@
 }
 
 
-/* ────────────────────────────────────────────────────────────────
-   7. CARD-HERO
-   Stat/metric cards with large hero numbers and small descriptors.
-
-   Classes:
-     .card-hero-row          — flex row, grey bg (#F9F9FC), 16px radius
-     .card-hero              — individual stat column (flex: 1, 20px padding)
-     .card-hero-label        — header text + icon (13px, 600)
-     .card-hero-value        — large number (36px, 600)
-     .card-hero-desc         — descriptor text (12px, 400)
-
-   Structure:
-     <div class="card-hero-row">
-       <div class="card-hero">
-         <div class="card-hero-label">
-           <svg>…</svg> Label
-         </div>
-         <div class="card-hero-value">42 <span class="card-hero-desc">description</span></div>
-       </div>
-     </div>
-   ──────────────────────────────────────────────────────────────── */
-
-.card-hero-row {
-  display: flex;
-  align-items: stretch;
-  background: #F9F9FC;
-  border-radius: 16px;
-}
-.card-hero {
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.card-hero-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--t-secondary);
-}
-.card-hero-label svg {
-  width: 13px;
-  height: 13px;
-  flex-shrink: 0;
-  stroke-width: 2.2;
-  color: var(--t-secondary);
-}
-.card-hero-value {
-  font-size: 36px;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--t-primary);
-  letter-spacing: -0.02em;
-}
-.card-hero-desc {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--t-tertiary);
-  letter-spacing: 0;
-  line-height: 1;
-}

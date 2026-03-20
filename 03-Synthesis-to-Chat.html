@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="Components/huc-components.css">
+<link rel="stylesheet" href="Components/alert-cards.css">
+<link rel="stylesheet" href="Components/card-hero.css">
 <link rel="stylesheet" href="Components/headers.css">
 <link rel="stylesheet" href="Components/chatbox.css">
 <style>
@@ -99,12 +101,12 @@ html, body {
   overflow: hidden;
 }
 #view-synthesis {
-  z-index: 1;
+  z-index: 1; /* active view — on top */
   opacity: 1;
   transform: translateX(0);
 }
 #view-edit {
-  z-index: 0;
+  z-index: 0; /* inactive view — behind */
   opacity: 0;
   visibility: hidden;
   transform: translateX(24px);
@@ -121,7 +123,7 @@ html, body {
               visibility 0s linear 0.5s;
 }
 #app-wrapper.transition-to-chat #view-edit {
-  z-index: 1;
+  z-index: 1; /* promoted to top during transition */
   opacity: 1;
   visibility: visible;
   transform: translateX(0);
@@ -1154,7 +1156,7 @@ html, body {
           <div class="ev-hero-header">
             <div class="ev-tags">
               <span class="pill pill-md pill-icon pill-red">
-                <img class="pill-ico" src="Icons/Sort descending.svg" style="width:20px;height:20px;">
+                <img class="pill-ico" src="Icons/Sort ascending.svg" style="width:20px;height:20px;">
                 High priority
               </span>
               <span class="pill pill-md pill-icon pill-transparent">

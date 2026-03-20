@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:wght@300;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="Components/chatbox.css">
 <link rel="stylesheet" href="Components/huc-components.css">
+<link rel="stylesheet" href="Components/alert-cards.css">
 <link rel="stylesheet" href="Components/headers.css">
 <style>
 
@@ -82,7 +83,7 @@ html, body {
 .lt-header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 50; /* app header — above content, below proto-nav (100) */
   display: flex;
   align-items: center;
   height: 48px;
@@ -490,7 +491,7 @@ html, body {
   padding: 0 16px;
   height: 40px;
   flex-shrink: 0;
-  z-index: 9999;
+  z-index: 100; /* proto-nav — above app header (50) */
   position: relative;
 }
 .lt-proto-label {

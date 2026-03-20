@@ -9,6 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="Components/chatbox.css">
 <link rel="stylesheet" href="Components/huc-components.css">
+<link rel="stylesheet" href="Components/alert-cards.css">
+<link rel="stylesheet" href="Components/card-hero.css">
 <link rel="stylesheet" href="Components/headers.css">
 <style>
 
@@ -687,7 +689,7 @@ html, body {
 .s2-workflow-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(0,0,0,0.4); }
 .s2-workflow-steps { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .s2-workflow-step { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--t-secondary); }
-.s2-workflow-step.active { color: var(--t-primary); font-weight: 700; }
+.s2-workflow-step.active { color: var(--t-primary); font-weight: 600; }
 .s2-step-circle {
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
@@ -846,7 +848,8 @@ html, body {
   white-space: nowrap;
 }
 #screen-1 .ev-step.done  { color: var(--t-tertiary); }
-#screen-1 .ev-step.active { color: var(--t-primary); font-weight: 700; }
+#screen-1 .ev-step.active { color: var(--t-primary); font-weight: 600; }
+#screen-1 .ev-step.current { font-weight: 600; color: var(--t-primary); }
 #screen-1 .ev-step-circle {
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
@@ -990,16 +993,12 @@ html, body {
         <div class="ev-hero">
           <div class="ev-hero-header">
             <div class="ev-tags">
-              <span class="ev-tag ev-tag-priority">
-                <svg width="12" height="12" viewBox="0 0 9.423 11.407" fill="#d3222a">
-                  <g transform="translate(0,11.407) scale(1,-1)">
-                    <path d="M4.711 11.407 L0 6.695 L0.774 5.921 L4.711 9.867 L8.649 5.921 L9.423 6.695 L4.711 11.407Z M4.711 5.486 L0 0.774 L0.774 0 L4.711 3.946 L8.649 0 L9.423 0.774 L4.711 5.486Z"/>
-                  </g>
-                </svg>
+              <span class="pill pill-md pill-icon pill-red">
+                <img class="pill-ico" src="Icons/Sort ascending.svg" style="width:20px;height:20px;">
                 High priority
               </span>
-              <span class="ev-tag ev-tag-request">
-                <img src="Icons/Audit.svg" width="20" height="20" alt="">
+              <span class="pill pill-md pill-icon pill-transparent">
+                <img class="pill-ico" src="Icons/Audit.svg">
                 Audit report request
               </span>
             </div>
@@ -1018,7 +1017,7 @@ html, body {
                 Scope
               </div>
               <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="ev-step done">
+              <div class="ev-step done current">
                 <div class="ev-step-circle done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
                 Evidence
               </div>

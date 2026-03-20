@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="Components/huc-components.css">
+<link rel="stylesheet" href="Components/alert-cards.css">
 <link rel="stylesheet" href="Components/headers.css">
 <style>
 
@@ -700,7 +701,7 @@ html, body {
   position: sticky;
   bottom: 0;
   box-sizing: border-box;
-  z-index: 10;
+  z-index: 10; /* chat footer — above scrollable content */
   isolation: isolate;
 }
 /* Wrapper so glow layer sits behind the input box */
@@ -721,7 +722,7 @@ html, body {
     rgba(0, 170, 243, 0) 100%
   );
   filter: blur(10px);
-  z-index: 0;
+  z-index: 0; /* glow — behind input box (1) */
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -733,7 +734,7 @@ html, body {
 .chat-input-box {
   width: 100%;
   position: relative;
-  z-index: 1;
+  z-index: 1; /* input box — above glow (0) */
   background: #ffffff;
   border: 1px solid var(--border);
   border-top: none;

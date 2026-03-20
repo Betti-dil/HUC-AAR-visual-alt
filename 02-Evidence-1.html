@@ -90,7 +90,7 @@ html, body {
   padding: 0 16px;
   height: 40px;
   flex-shrink: 0;
-  z-index: 9999;
+  z-index: 100; /* proto-nav — above app header (50) */
   position: relative;
 }
 #proto-nav .proto-label {
@@ -864,7 +864,7 @@ html, body {
           <div class="lt-s1-hero-header">
             <div class="ev-tags">
               <span class="pill pill-md pill-icon pill-red">
-                <img class="pill-ico" src="Icons/Sort descending.svg" style="width:20px;height:20px;">
+                <img class="pill-ico" src="Icons/Sort ascending.svg" style="width:20px;height:20px;">
                 High priority
               </span>
               <span class="pill pill-md pill-icon pill-transparent">
