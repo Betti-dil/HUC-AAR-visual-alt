@@ -7,204 +7,55 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Components/layout.css">
 <link rel="stylesheet" href="Components/huc-components.css">
+<link rel="stylesheet" href="Components/app-chrome.css">
+<link rel="stylesheet" href="Components/hero-section.css">
 <link rel="stylesheet" href="Components/alert-cards.css">
 <link rel="stylesheet" href="Components/card-hero.css">
 <link rel="stylesheet" href="Components/headers.css">
 <link rel="stylesheet" href="Components/chatbox.css">
 <style>
-
 /* ============================================================
-   DESIGN TOKENS — avo.re bw light translation
+   02-Evidence-v2 — PAGE-SPECIFIC STYLES
+   All shared styles come from Components/*.css
    ============================================================ */
+
+/* Design tokens */
 :root {
-  /* Backgrounds */
-  --bg-base:       #f0f0f1;
-  --bg-surface:    #ffffff;
-  --bg-sidebar:    #e8e8ea;
-
-  /* Dark-alias names -> light values (keeps var() refs working) */
-  --bg-primary:    #f0f0f1;
-  --bg-elevated:   #ffffff;
-  --bg-component:  #f4f4f5;
-
-  /* Text */
-  --t-primary:     #282E37;
-  --t-secondary:   #525252;
-  --t-tertiary:    #6F7377;
-
-  /* Text aliases */
-  --text-primary:    #282E37;
-  --text-secondary:  #525252;
+  --bg-base:         #f0f0f1;
+  --bg-surface:      #ffffff;
+  --bg-component:    #f4f4f5;
+  --t-primary:       #282E37;
+  --t-secondary:     #525252;
+  --t-tertiary:      #6F7377;
   --text-muted:      #6F7377;
   --text-very-muted: #A0A2A5;
-
-  /* Borders */
-  --border:           rgba(0,0,0,0.09);
-  --border-primary:   rgba(0,0,0,0.09);
-  --border-secondary: rgba(0,0,0,0.14);
-
-  /* Semantic palette — adapted for light bg */
-  --green:  #16a34a;
-  --blue:   #1d4ed8;
-  --amber:  #b45309;
-  --red:    #D3222A;
-  --purple: #7c3aed;
-  --orange: #ea580c;
-  --brand:  #D3222A;
-
-  /* Header */
-  --bg-header:       rgba(240,240,241,0.85);
-
-  /* UI chrome */
-  --ui-dark:          #1e293b;
-  --ui-darkest:       #0f172a;
-  --ui-border-strong: #e2e8f0;
-  --ui-surface-tint:  #f1f5f9;
-  --ui-text-dim:      #64748b;
-
+  --border:          rgba(0,0,0,0.09);
+  --border-secondary:rgba(0,0,0,0.14);
+  --green:           #16a34a;
+  --blue:            #1d4ed8;
+  --amber:           #b45309;
+  --red:             #D3222A;
+  --purple:          #7c3aed;
+  --orange:          #ea580c;
+  --brand:           #D3222A;
+  --ui-dark:         #1e293b;
+  --ui-darkest:      #0f172a;
+  --ui-border-strong:#e2e8f0;
+  --ui-surface-tint: #f1f5f9;
+  --ui-text-dim:     #64748b;
   --font: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
 }
 
-/* ============================================================
-   RESET & BASE
-   ============================================================ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body {
-  height: 100%;
-  font-family: var(--font);
-  font-size: 14px;
-  background: var(--bg-base);
-  color: var(--t-primary);
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* ============================================================
-   SCREENS WRAPPER
-   ============================================================ */
-#screens-wrapper {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-}
-.screen {
-  display: none;
-  position: absolute;
-  inset: 0;
-  flex-direction: column;
-}
-.screen.active { display: flex; }
-
-/* ============================================================
-   PULSE / LOADING ANIMATIONS
-   ============================================================ */
+/* ── Pulse animation ── */
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.4; }
 }
 .pulse { animation: pulse 1.4s ease-in-out infinite; }
 
-/* ============================================================
-   APP HEADER
-   ============================================================ */
-.lt-header {
-  display: flex;
-  align-items: center;
-  height: 48px;
-  padding: 0 20px;
-  background: #ffffff;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-.lt-logo {
-  font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
-  color: var(--t-primary);
-  display: flex; align-items: center; gap: 8px;
-  text-decoration: none; cursor: pointer;
-  transition: opacity 0.15s;
-}
-.lt-logo:hover { opacity: 0.7; }
-.lt-logo-mark { width: 24px; height: 24px; flex-shrink: 0; }
-.lt-logo-mark img { width: 24px; height: 24px; display: block; }
-.lt-spacer { flex: 1; }
-.lt-header-nav { display: flex; align-items: center; gap: 8px; }
-.lt-activity-pill {
-  display: flex; align-items: center; gap: 8px;
-  height: 36px; padding: 0 12px;
-  border: 1px solid var(--border); border-radius: 20px;
-  background: #ffffff;
-  font-size: 13px; font-weight: 400; color: var(--ui-dark);
-  cursor: pointer; white-space: nowrap; transition: border-color 0.15s;
-}
-.lt-activity-pill:hover { border-color: var(--ui-border-strong); }
-.lt-activity-pill svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--ui-dark); }
-.lt-activity-count {
-  display: inline-flex; align-items: center; justify-content: center;
-  background: var(--ui-surface-tint); border-radius: 20px; padding: 1px 7px;
-  font-size: 12px; font-weight: 400; color: var(--ui-text-dim);
-}
-.lt-icon-btn {
-  position: relative;
-  width: 36px; height: 36px;
-  display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--border); border-radius: 10px;
-  background: #ffffff; cursor: pointer; color: var(--ui-dark);
-  flex-shrink: 0; transition: border-color 0.15s;
-}
-.lt-icon-btn:hover { border-color: var(--ui-border-strong); }
-.lt-icon-btn svg { width: 16px; height: 16px; }
-.lt-notif-dot {
-  position: absolute; top: 5px; right: 5px;
-  width: 9px; height: 9px;
-  background: var(--ui-darkest); border-radius: 50%; border: 1.5px solid #ffffff;
-}
-.lt-avatar {
-  width: 32px; height: 32px;
-  background: #bae6fd; color: #0369a1;
-  border-radius: 10px; cursor: pointer; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
-}
-
-/* ============================================================
-   INVESTIGATION LAYOUT
-   ============================================================ */
-.s-investigation-body { display: flex; flex: 1; overflow: hidden; background: transparent; }
-.s-left-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
-.s-left-scroll { flex: 1; overflow: hidden auto; padding: 44px 20px 0; display: flex; flex-direction: column; align-items: center; scrollbar-width: none; }
-.s-left-scroll::-webkit-scrollbar { display: none; }
-.s-scroll-inner { width: 100%; max-width: 1024px; }
-
-/* ============================================================
-   HERO SECTION
-   ============================================================ */
-.lt-s1-hero {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  border-radius: 0;
-  padding: 0 0 20px;
-}
-.lt-s1-hero-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-.lt-s1-page-title {
-  font-size: 40px;
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  color: var(--t-primary);
-  line-height: 1.2;
-}
-.lt-s1-page-title strong { font-weight: 600; }
-
-/* ── Hero title crossfade ── */
+/* ── Hero title crossfade (screen 0) ── */
 .hero-title-wrap {
   position: relative;
   width: 100%;
@@ -214,53 +65,13 @@ html, body {
 .hero-title-b {
   transition: opacity 3s ease;
 }
-.hero-title-a {
-  opacity: 1;
-}
+.hero-title-a { opacity: 1; }
 .hero-title-b {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute; inset: 0; opacity: 0;
+  display: flex; align-items: center; justify-content: center;
 }
-.stage-2 .hero-title-a {
-  opacity: 0;
-}
-.stage-2 .hero-title-b {
-  opacity: 1;
-}
-
-/* ── Hero glow backgrounds ── */
-.hero-glow-teal {
-  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(0,195,215,0.28) 0%, transparent 65%), var(--bg-base);
-  transition: background 1s ease;
-}
-.hero-glow-green {
-  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(142,228,0,0.22) 0%, transparent 65%), var(--bg-base);
-}
-
-/* Workflow */
-.s2-workflow {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding-top: 20px;
-}
-.s2-workflow-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(0,0,0,0.4); }
-.s2-workflow-steps { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
-.s2-workflow-step { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--t-secondary); }
-.s2-workflow-step.active { color: var(--t-primary); font-weight: 600; }
-.s2-step-circle { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.s2-workflow-arrow { color: var(--t-tertiary); display: flex; align-items: center; }
-
-/* ============================================================
-   EVIDENCE TAGS
-   ============================================================ */
-.ev-tags { display: flex; gap: 10px; justify-content: center; }
+.stage-2 .hero-title-a { opacity: 0; }
+.stage-2 .hero-title-b { opacity: 1; }
 
 /* ============================================================
    PROGRESS BARS
@@ -379,245 +190,9 @@ html, body {
    ============================================================ */
 
 /* Screen background gradient */
-#screen-1 {
-  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(114,252,170,0.28) 0%, transparent 65%), var(--bg-base);
-}
+/* #screen-1 glow: applied via .hero-glow-green on .page-scroll */
 
-/* Agent block */
-.agent-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  color: var(--t-tertiary);
-  text-transform: uppercase;
-}
-.agent-label.orange    { color: #ea580c; }
-.agent-label.synth     { color: #7c3aed; }
-.agent-label.grc       { color: #1d4ed8; }
-.agent-label.forensic  { color: #ea580c; }
-.agent-label.confidence { color: #16a34a; }
-.agent-title {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--t-primary);
-  line-height: 1.4;
-}
-.agent-subtitle { font-size: 12px; color: var(--t-tertiary); }
-.agent-body {
-  font-size: 13px;
-  color: var(--t-secondary);
-  line-height: 1.6;
-}
-.agent-msg {
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.agent-text { font-size: 13px; color: var(--t-secondary); line-height: 1.6; }
-.agent-text p { margin: 0 0 8px; }
-.agent-text p:last-child { margin-bottom: 0; }
-
-/* Badges */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 2px 7px;
-  border-radius: 20px;
-}
-.badge-red    { background: rgba(211,34,42,0.08);  color: #D3222A; border: 1px solid rgba(211,34,42,0.2); }
-.badge-green  { background: rgba(22,163,74,0.08);  color: #16a34a; border: 1px solid rgba(22,163,74,0.2); }
-.badge-blue   { background: rgba(29,78,216,0.08);  color: #1d4ed8; border: 1px solid rgba(29,78,216,0.2); }
-.badge-amber  { background: rgba(180,83,9,0.08);   color: #b45309; border: 1px solid rgba(180,83,9,0.2); }
-.badge-orange { background: rgba(234,88,12,0.08);  color: #ea580c; border: 1px solid rgba(234,88,12,0.2); }
-.badge-muted  { background: #f4f4f5; color: var(--t-tertiary); border: 1px solid var(--border); }
-
-/* Toggle */
-.toggle-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-}
-.toggle-row:last-child { border-bottom: none; }
-.toggle-label { flex: 1; font-size: 14px; color: var(--t-secondary); }
-.toggle-rec { font-size: 10px; color: #16a34a; font-weight: 600; }
-.toggle {
-  width: 36px;
-  height: 20px;
-  background: #16a34a;
-  border-radius: 10px;
-  position: relative;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-.toggle.off { background: #e4e4e7; border: 1px solid var(--border); }
-.toggle::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: #fff;
-  border-radius: 50%;
-  top: 2px;
-  right: 2px;
-  transition: left 0.2s cubic-bezier(0.34,1.56,0.64,1), right 0.2s cubic-bezier(0.34,1.56,0.64,1);
-}
-.toggle.off::after { right: auto; left: 2px; background: #a1a1aa; }
-
-/* Scope table */
-.scope-table { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
-.scope-row { display: flex; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-.scope-row:last-child { border-bottom: none; }
-.scope-key { width: 160px; flex-shrink: 0; color: var(--t-tertiary); font-size: 14px; font-weight: 600; }
-.scope-val { flex: 1; color: var(--t-secondary); font-size: 14px; display: flex; align-items: center; gap: 8px; }
-
-/* Scope pills */
-.pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
-.scope-pill {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 12px; padding: 4px 10px; border-radius: 20px;
-  background: rgba(22,163,74,0.08); border: 1px solid rgba(22,163,74,0.2); color: #16a34a;
-}
-.scope-pill.off { background: #f4f4f5; border-color: var(--border); color: var(--t-tertiary); text-decoration: line-through; }
-
-/* Warn box */
-.warn-box {
-  background: rgba(251,191,36,0.06);
-  border: 1px solid rgba(180,83,9,0.18);
-  border-radius: 10px;
-  padding: 14px 16px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-.warn-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; color: #92400e; }
-.warn-content { flex: 1; }
-.warn-title { font-size: 13px; font-weight: 600; color: #92400e; margin-bottom: 4px; }
-.warn-body  { font-size: 12px; color: var(--t-tertiary); line-height: 1.5; }
-.warn-btn {
-  margin-top: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px; font-weight: 600;
-  color: #92400e;
-  background: rgba(251,191,36,0.08);
-  border: 1px solid rgba(180,83,9,0.18);
-  border-radius: 6px;
-  padding: 6px 12px;
-  cursor: pointer;
-}
-
-/* Info box */
-.info-box {
-  background: rgba(29,78,216,0.04);
-  border: 1px solid rgba(29,78,216,0.15);
-  border-radius: 12px;
-  padding: 14px 16px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-.info-content { flex: 1; font-size: 12px; color: var(--t-secondary); line-height: 1.5; }
-.info-content strong { color: #1d4ed8; }
-.info-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px; font-weight: 600;
-  color: #1d4ed8;
-  background: rgba(29,78,216,0.06);
-  border: 1px solid rgba(29,78,216,0.18);
-  border-radius: 6px;
-  padding: 6px 12px;
-  cursor: pointer;
-  margin-top: 8px;
-}
-
-/* Evidence tag variants */
-.ev-tag {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12px; font-weight: 400; font-family: var(--font);
-  line-height: 1.4;
-  padding: 6px 14px 6px 10px; border-radius: 9999px; border: 1px solid;
-  color: #000000;
-}
-.ev-tag svg { flex-shrink: 0; }
-.ev-tag-priority { background: #ffedeb; border-color: #ee312e; }
-.ev-tag-request  { background: transparent; border-color: #A0A2A5; }
-
-/* Screen-1 hero */
-#screen-1 .ev-hero {
-  background: transparent;
-  padding: 0 24px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-}
-#screen-1 .ev-hero-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-#screen-1 .ev-hero-title {
-  font-size: 40px;
-  font-weight: 300;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--t-primary);
-  text-align: center;
-}
-#screen-1 .ev-hero-title strong { font-weight: 700; }
-#screen-1 .ev-workflow {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding-top: 20px;
-}
-#screen-1 .ev-workflow-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.4);
-}
-#screen-1 .ev-workflow-steps {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-#screen-1 .ev-step {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--t-secondary);
-  white-space: nowrap;
-}
-#screen-1 .ev-step.done  { color: var(--t-tertiary); }
-#screen-1 .ev-step.active { color: var(--t-primary); font-weight: 700; }
-#screen-1 .ev-step-circle {
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-#screen-1 .ev-step-arrow { color: var(--t-tertiary); display: flex; align-items: center; }
+/* Screen-1 hero — uses shared hero-section.css */
 
 /* Screen-1 progress bar row */
 #screen-1 .ev-progress-bar-row {
@@ -725,45 +300,40 @@ html, body {
 </head>
 <body>
 
-<!-- SCREENS WRAPPER -->
-<div id="screens-wrapper">
-
 <!-- ============================================================
      SCREEN 0 — Evidence Gathering (animated)
      ============================================================ -->
-<div class="screen active hero-glow-teal" id="screen-0">
-  <div class="lt-header">
-    <div class="lt-logo">
-      <div class="lt-logo-mark"><img src="Icons/D_icon.png" alt="Diligent"></div>
+<div class="screen active" id="screen-0">
+  <div class="app-header">
+    <div class="app-logo">
+      <div class="app-logo-mark"><img src="Icons/D_icon.png" alt="Diligent"></div>
       Diligent  &middot;  Automated Audit Reporting
     </div>
-    <div class="lt-spacer"></div>
-    <div class="lt-header-nav">
-      <div class="lt-activity-pill">
+    <div class="app-spacer"></div>
+    <div class="app-header-nav">
+      <div class="app-activity-pill">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         Recent system activity
-        <span class="lt-activity-count">5</span>
+        <span class="app-activity-count">5</span>
       </div>
-      <div class="lt-icon-btn">
+      <div class="app-icon-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-        <span class="lt-notif-dot"></span>
+        <span class="app-notif-dot"></span>
       </div>
-      <div class="lt-icon-btn">
+      <div class="app-icon-btn">
         <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
       </div>
-      <div class="lt-avatar">AC</div>
+      <div class="app-avatar">AC</div>
     </div>
   </div>
 
-  <div class="s-investigation-body">
-    <div class="s-left-content">
-      <div class="s-left-scroll">
-        <div class="s-scroll-inner content-gap">
+  <div class="page-scroll hero-glow-blue">
+    <div class="page-inner content-gap">
 
         <!-- Hero -->
-        <div class="lt-s1-hero">
-          <div class="lt-s1-hero-header">
-            <div class="ev-tags">
+        <div class="hero-section-workflow">
+          <div class="hero-header">
+            <div class="hero-tags">
               <span class="pill pill-md pill-icon pill-red">
                 <img class="pill-ico" src="Icons/Sort ascending.svg" style="width:20px;height:20px;">
                 High priority
@@ -774,47 +344,47 @@ html, body {
               </span>
             </div>
             <div class="hero-title-wrap">
-              <h1 class="lt-s1-page-title hero-title-a"><strong>Collecting evidence</strong> has started.</h1>
+              <h1 class="hero-title hero-title-a"><strong>Collecting evidence</strong> has started.</h1>
               <div class="hero-title-b">
-                <h1 class="lt-s1-page-title"><strong>Scanning sources</strong> is complete.</h1>
+                <h1 class="hero-title"><strong>Collecting evidence</strong> is complete.</h1>
               </div>
             </div>
           </div>
-          <div class="s2-workflow">
-            <div class="s2-workflow-label">Workflow Status</div>
-            <div class="s2-workflow-steps">
-              <div class="s2-workflow-step" style="color:var(--t-tertiary);">
-                <div class="s2-step-circle"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
+          <div class="hero-stepper">
+            <div class="hero-stepper-label">Workflow Status</div>
+            <div class="hero-stepper-steps">
+              <div class="hero-step done">
+                <div class="hero-step-icon"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
                 Investigation
               </div>
-              <span class="s2-workflow-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="s2-workflow-step" style="color:var(--t-tertiary);">
-                <div class="s2-step-circle"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step done">
+                <div class="hero-step-icon"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
                 Scope
               </div>
-              <span class="s2-workflow-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="s2-workflow-step active" id="ev-workflow-evidence">
-                <div class="s2-step-circle active" id="ev-workflow-evidence-circle"><img src="Icons/Active.svg" width="20" height="20" alt="" id="ev-workflow-evidence-icon"></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step active" id="ev-workflow-evidence">
+                <div class="hero-step-icon active" id="ev-workflow-evidence-circle"><img src="Icons/Active.svg" width="20" height="20" alt="" id="ev-workflow-evidence-icon"></div>
                 Evidence
               </div>
-              <span class="s2-workflow-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="s2-workflow-step">
-                <div class="s2-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step">
+                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
                 Synthesis
               </div>
-              <span class="s2-workflow-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="s2-workflow-step">
-                <div class="s2-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step">
+                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
                 Edit &amp; Authorize
               </div>
-              <span class="s2-workflow-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="s2-workflow-step">
-                <div class="s2-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step">
+                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
                 Veracity scoring
               </div>
-              <span class="s2-workflow-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="s2-workflow-step">
-                <div class="s2-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step">
+                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
                 Approve
               </div>
             </div>
@@ -835,7 +405,7 @@ html, body {
                 <div class="alert-card-sub">View results to read the summary about the collected evidences, risks and gaps.</div>
               </div>
               <div class="alert-card-actions">
-                <button class="btn btn-secondary btn-sm" id="ev-view-results-btn">View results</button>
+                <button class="btn btn-primary btn-sm" id="ev-view-results-btn">View results</button>
               </div>
             </div>
           </div>
@@ -892,11 +462,11 @@ html, body {
                     Risk register scanning
                   </div>
                   <div class="ev-task-row" data-task="1">
-                    <div class="ev-task-icon"><img src="Icons/Pending.svg" width="20" height="20" alt="" class="ev-task-img"></div>
+                    <div class="ev-task-icon"><img src="Icons/Pending-task.svg" width="20" height="20" alt="" class="ev-task-img"></div>
                     Appetite threshold
                   </div>
                   <div class="ev-task-row" data-task="2">
-                    <div class="ev-task-icon"><img src="Icons/Pending.svg" width="20" height="20" alt="" class="ev-task-img"></div>
+                    <div class="ev-task-icon"><img src="Icons/Pending-task.svg" width="20" height="20" alt="" class="ev-task-img"></div>
                     Velocity data
                   </div>
                 </div>
@@ -977,68 +547,61 @@ html, body {
         </div>
         </div><!-- end section-gap -->
 
-        </div><!-- end s-scroll-inner -->
+        </div><!-- end page-inner -->
 
-      <div class="chat-area">
-        <div class="chat-inner">
-          <div class="chat-input-row">
-            <textarea placeholder="Ask about evidence, steer the scan, or reprioritise sources..."></textarea>
-            <div class="chat-bottom">
-              <div class="chat-chips-row">
-                <div class="chat-chip">Prioritise Compliance Maps first</div>
-                <div class="chat-chip">Show gaps in evidence base</div>
-                <div class="chat-chip">Skip External Intel</div>
+      <!-- Chat bar (floating pill) -->
+      <div style="position:fixed; bottom:0; left:0; right:0; z-index:100; pointer-events:none; padding:0 0 20px;">
+        <div style="width:45vw; min-width:500px; margin:0 auto; padding:0 24px; pointer-events:auto;">
+          <div style="border-radius:16px; border:1px solid rgba(0,0,0,0.09); background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); padding:8px; box-shadow:0 -4px 32px rgba(0,0,0,0.10);">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="display:flex; height:40px; width:40px; align-items:center; justify-content:center; border-radius:12px; background:#f8fafc; border:1px solid rgba(0,0,0,0.05); flex-shrink:0; padding:6px;">
+                <img src="Icons/D_icon.png" alt="" style="width:100%; height:100%; object-fit:contain;">
               </div>
-              <div class="chat-actions">
-                <button class="btn btn-secondary btn-md">Clear</button>
-                <button class="btn btn-primary btn-md" disabled>Send</button>
-              </div>
+              <input type="text" placeholder="Ask about risks, assign owners, draft disclosures…" style="flex:1; background:transparent; font-size:14px; color:#1e293b; border:none; outline:none; font-family:'Plus Jakarta Sans',sans-serif;" />
+              <button style="display:flex; height:40px; width:40px; align-items:center; justify-content:center; border-radius:12px; background:#1e293b; color:#ffffff; border:none; cursor:pointer; flex-shrink:0; transition:background 0.15s;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+              </button>
             </div>
           </div>
         </div>
       </div>
-      </div><!-- end s-left-scroll -->
-    </div>
-
-  </div>
+  </div><!-- end page-scroll -->
 </div>
 
 <!-- ============================================================
      SCREEN 1 — Evidence collection complete
      ============================================================ -->
 <div class="screen" id="screen-1">
-  <div class="lt-header">
-    <div class="lt-logo">
-      <div class="lt-logo-mark"><img src="Icons/D_icon.png" alt="Diligent"></div>
+  <div class="app-header">
+    <div class="app-logo">
+      <div class="app-logo-mark"><img src="Icons/D_icon.png" alt="Diligent"></div>
       Diligent  &middot;  Automated Audit Reporting
     </div>
-    <div class="lt-spacer"></div>
-    <div class="lt-header-nav">
-      <div class="lt-activity-pill">
+    <div class="app-spacer"></div>
+    <div class="app-header-nav">
+      <div class="app-activity-pill">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         Recent system activity
-        <span class="lt-activity-count">5</span>
+        <span class="app-activity-count">5</span>
       </div>
-      <div class="lt-icon-btn">
+      <div class="app-icon-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-        <span class="lt-notif-dot"></span>
+        <span class="app-notif-dot"></span>
       </div>
-      <div class="lt-icon-btn">
+      <div class="app-icon-btn">
         <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
       </div>
-      <div class="lt-avatar">AC</div>
+      <div class="app-avatar">AC</div>
     </div>
   </div>
 
-  <div class="s-investigation-body">
-    <div class="s-left-content">
-      <div class="s-left-scroll">
-        <div class="s-scroll-inner content-gap">
+  <div class="page-scroll hero-glow-green">
+    <div class="page-inner content-gap">
 
         <!-- Hero (02-Evidence-05) -->
-        <div class="ev-hero">
-          <div class="ev-hero-header">
-            <div class="ev-tags">
+        <div class="hero-section-workflow">
+          <div class="hero-header">
+            <div class="hero-tags">
               <span class="pill pill-md pill-icon pill-red">
                 <img class="pill-ico" src="Icons/Sort ascending.svg" style="width:20px;height:20px;">
                 High priority
@@ -1048,43 +611,43 @@ html, body {
                 Audit report request
               </span>
             </div>
-            <h1 class="ev-hero-title"><strong>Evidence collection is complete.</strong> Review and proceed.</h1>
+            <h1 class="hero-title"><strong>Evidence collection is complete.</strong> Review and proceed.</h1>
           </div>
-          <div class="ev-workflow">
-            <div class="ev-workflow-label">Workflow status</div>
-            <div class="ev-workflow-steps">
-              <div class="ev-step done">
-                <div class="ev-step-circle done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
+          <div class="hero-stepper">
+            <div class="hero-stepper-label">Workflow status</div>
+            <div class="hero-stepper-steps">
+              <div class="hero-step done">
+                <div class="hero-step-icon done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
                 Investigation
               </div>
-              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="ev-step done">
-                <div class="ev-step-circle done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step done">
+                <div class="hero-step-icon done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
                 Scope
               </div>
-              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="ev-step done">
-                <div class="ev-step-circle done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step done">
+                <div class="hero-step-icon done"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
                 Evidence
               </div>
-              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="ev-step">
-                <div class="ev-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step">
+                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
                 Synthesis
               </div>
-              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="ev-step">
-                <div class="ev-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step">
+                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
                 Edit &amp; Authorize
               </div>
-              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="ev-step">
-                <div class="ev-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step">
+                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
                 Veracity scoring
               </div>
-              <span class="ev-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="ev-step">
-                <div class="ev-step-circle"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
+              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <div class="hero-step">
+                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
                 Approve
               </div>
             </div>
@@ -1247,50 +810,31 @@ html, body {
                 HITL Gate 1.5 of 3 — Confirm the evidence base before synthesis begins.
               </div>
 
-              <div class="alert-card alert-card-md alert-card-green">
-                <div class="alert-card-icon">
-                  <img src="Icons/Success.svg" width="24" height="24" alt="">
-                </div>
-                <div class="alert-card-body">
-                  <div class="alert-card-title">Saved to Boards — Evidence Pack &middot; Cybersecurity Assurance Report</div>
-                  <div class="alert-card-sub">Available as supporting material in the Audit Committee board pack. Accessible to all members with view rights.</div>
-                </div>
-                <div class="alert-card-actions">
-                  <button class="btn btn-secondary btn-sm">Open in Boards</button>
-                </div>
-              </div>
 
           </div>
 
         </div><!-- /section-gap -->
 
-        </div><!-- end s-scroll-inner -->
+        </div><!-- end page-inner -->
 
-      <div class="chat-area">
-        <div class="chat-inner">
-          <div class="chat-input-row">
-            <textarea placeholder="Ask about evidence, review the pack, or re-run a source..."></textarea>
-            <div class="chat-bottom">
-              <div class="chat-chips-row">
-                <div class="chat-chip">Summarise the evidence pack</div>
-                <div class="chat-chip">Flag any gaps</div>
-                <div class="chat-chip">Re-run External Intel</div>
+      <!-- Chat bar (floating pill) -->
+      <div style="position:fixed; bottom:0; left:0; right:0; z-index:100; pointer-events:none; padding:0 0 20px;">
+        <div style="width:45vw; min-width:500px; margin:0 auto; padding:0 24px; pointer-events:auto;">
+          <div style="border-radius:16px; border:1px solid rgba(0,0,0,0.09); background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); padding:8px; box-shadow:0 -4px 32px rgba(0,0,0,0.10);">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="display:flex; height:40px; width:40px; align-items:center; justify-content:center; border-radius:12px; background:#f8fafc; border:1px solid rgba(0,0,0,0.05); flex-shrink:0; padding:6px;">
+                <img src="Icons/D_icon.png" alt="" style="width:100%; height:100%; object-fit:contain;">
               </div>
-              <div class="chat-actions">
-                <button class="btn btn-secondary btn-md">Clear</button>
-                <button class="btn btn-primary btn-md" disabled>Send</button>
-              </div>
+              <input type="text" placeholder="Ask about risks, assign owners, draft disclosures…" style="flex:1; background:transparent; font-size:14px; color:#1e293b; border:none; outline:none; font-family:'Plus Jakarta Sans',sans-serif;" />
+              <button style="display:flex; height:40px; width:40px; align-items:center; justify-content:center; border-radius:12px; background:#1e293b; color:#ffffff; border:none; cursor:pointer; flex-shrink:0; transition:background 0.15s;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+              </button>
             </div>
           </div>
         </div>
       </div>
-
-      </div><!-- end s-left-scroll -->
-    </div><!-- end s-left-content -->
-  </div><!-- end investigation-body -->
-</div>
-
-</div><!-- end screens-wrapper -->
+  </div><!-- end page-scroll -->
+</div><!-- end screen-1 -->
 
 
 <script>
@@ -1319,7 +863,7 @@ html, body {
   var logErmIcon    = document.getElementById('ev-log-erm-icon');
   var alertWrap     = document.getElementById('ev-complete-alert-wrap');
   var viewResultBtn = document.getElementById('ev-view-results-btn');
-  var heroWrap      = document.querySelector('.lt-s1-hero');
+  var heroWrap      = document.querySelector('.hero-section-workflow');
   var workflowEvStep   = document.getElementById('ev-workflow-evidence');
   var workflowEvCircle = document.getElementById('ev-workflow-evidence-circle');
   var workflowEvIcon   = document.getElementById('ev-workflow-evidence-icon');
@@ -1371,7 +915,7 @@ html, body {
       } else if (state === 'active') {
         img.src = 'Icons/Active.svg';
       } else {
-        img.src = 'Icons/Pending.svg';
+        img.src = 'Icons/Pending-task.svg';
       }
     }
 
@@ -1384,12 +928,13 @@ html, body {
   /* ── Completion sequence ── */
   function onComplete() {
     /* Hero title crossfade */
-    var heroHeader = document.querySelector('.lt-s1-hero-header');
+    var heroHeader = document.querySelector('.hero-header');
     heroHeader.classList.add('stage-2');
 
     /* Hero glow: teal -> green */
-    screen0.classList.remove('hero-glow-teal');
-    screen0.classList.add('hero-glow-green');
+    var scrollEl = screen0.querySelector('.page-scroll');
+    scrollEl.classList.remove('hero-glow-blue');
+    scrollEl.classList.add('hero-glow-green');
 
     /* Workflow Evidence step -> done */
     workflowEvStep.classList.remove('active');
@@ -1409,7 +954,7 @@ html, body {
     alertWrap.classList.add('visible');
 
     /* Scroll to top to reveal the alert */
-    var scrollContainer = document.querySelector('.s-left-scroll');
+    var scrollContainer = document.querySelector('.page-scroll');
     if (scrollContainer) {
       scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
     }

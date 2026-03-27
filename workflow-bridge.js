@@ -34,23 +34,8 @@
       }
     });
 
-    // Special case: inject "Confirm findings" button in 04-Veracity-scoring
-    var alertCard = document.querySelector('.alert-card-yellow');
-    if (alertCard && !document.getElementById('wf-confirm-findings')) {
-      // Check we're in the right file (has veracity-related content)
-      var hasVeracity = document.querySelector('.col-confidence');
-      if (hasVeracity) {
-        var container = document.createElement('div');
-        container.id = 'wf-confirm-findings';
-        container.style.cssText = 'display:flex; justify-content:flex-end; margin-top:16px; padding:0 0 16px;';
-        container.innerHTML = '<button class="btn btn-primary btn-md">Confirm findings</button>';
-        alertCard.parentElement.appendChild(container);
-        container.querySelector('button').addEventListener('click', function(e) {
-          e.preventDefault();
-          window.top.postMessage({ wfAdvance: 4 }, '*');
-        });
-      }
-    }
+    // Note: "Confirm findings" button is now in 04-Veracity-scoring.html source
+    // with inline onclick that checks for workflowBridge — no injection needed.
   }
 
   // Run on DOMContentLoaded and also after a delay for dynamic content

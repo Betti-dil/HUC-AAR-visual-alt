@@ -50,13 +50,13 @@
 .hero-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 40px;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: -0.02em;
   color: #282E37;
   line-height: 1.2;
   margin: 0;
 }
-.hero-title strong { font-weight: 600; }
+.hero-title strong { font-weight: 300; }
 
 
 /* ────────────────────────────────────────────────────────────────
@@ -105,13 +105,16 @@
 
 /* Step states ─────────────────────────────────────────────────
    .current  = the step the user is on right now (always bold)
-               Can combine with .active (in-progress) or .done (completed).
+               Can combine with .active (in-progress), .done (completed),
+               or .pending (awaiting action).
    .done     = completed step (muted color, normal weight)
    .active   = step in progress (primary color, bold — always paired with .current)
+   .pending  = awaiting action (primary color, bold — uses Pending.svg icon)
    Next step = default styling (no modifier class), uses Next.svg icon, 400 weight
    ──────────────────────────────────────────────────────────── */
 .hero-step.done    { color: var(--t-tertiary); }
 .hero-step.active  { color: var(--t-primary, #282E37); font-weight: 600; }
+.hero-step.pending { color: var(--t-primary, #282E37); font-weight: 600; }
 .hero-step.current { font-weight: 600; color: var(--t-primary, #282E37); }
 
 /* Step icon container */
@@ -138,8 +141,9 @@
    4. BACKGROUND GLOW
    Applied to the scroll container / screen wrapper that holds the hero.
    Glow color is determined by the *current* step's status:
-     Current step is Active  →  .hero-glow-blue   (blue/teal)
-     Current step is Done    →  .hero-glow-green   (green)
+     Current step is Active   →  .hero-glow-blue    (blue/teal)
+     Current step is Done     →  .hero-glow-green   (green)
+     Current step is Pending  →  .hero-glow-yellow  (yellow, from pill-yellow palette)
    Previous steps being Done does NOT affect glow — only the current step matters.
    Transition lets JS swap classes for animated glow color change
    (e.g. when current step completes: blue → green).
@@ -150,7 +154,12 @@
   transition: background 1s ease;
 }
 .hero-glow-green {
-  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(142,228,0,0.22) 0%, transparent 65%), var(--bg-base);
+  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(114,252,170,0.28) 0%, transparent 65%), var(--bg-base);
+  transition: background 1s ease;
+}
+
+.hero-glow-yellow {
+  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(254,228,0,0.28) 0%, transparent 65%), var(--bg-base);
   transition: background 1s ease;
 }
 

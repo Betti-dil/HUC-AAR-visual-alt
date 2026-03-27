@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity Risk — Situational Overview | HUC Automated audit reporting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ============================================================
+   DESIGN TOKENS — Figma: 5-HUC-Automated-audit-reporting (node 226-7292)
+   ============================================================ */
+:root {
+  --bg-base:       #f0f0f1;
+  --bg-surface:    #ffffff;
+  --bg-component:  #f4f4f5;
+
+  --t-primary:     #0a0a0a;
+  --t-secondary:   #525252;
+  --t-tertiary:    #737373;
+
+  --border:           rgba(0,0,0,0.09);
+  --border-secondary: rgba(0,0,0,0.14);
+
+  --brand: #D3222A;
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  /* Evidence tags — Figma spec */
+  --tag-fact-bg:       #e0f2fe;
+  --tag-fact-border:    rgba(14,165,233,0.25);
+  --tag-fact-text:     #0369a1;
+  --tag-assumption-bg: #FFFBEB;
+  --tag-assumption:    #92400e;
+  --tag-emerging-bg:   rgba(211,34,42,0.06);
+  --tag-emerging:      #D3222A;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  font-family: var(--font);
+  font-size: 14px;
+  background: var(--bg-base);
+  color: var(--t-primary);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   APP HEADER
+   ============================================================ */
+.lt-header {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 20px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.lt-logo {
+  font-size: 14px; font-weight: 500; letter-spacing: -0.01em;
+  color: var(--t-primary);
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.lt-logo:hover { opacity: 0.7; }
+.lt-logo-mark { width: 24px; height: 24px; flex-shrink: 0; }
+.lt-logo-mark img { width: 24px; height: 24px; display: block; }
+.lt-spacer { flex: 1; }
+.lt-header-nav { display: flex; align-items: center; gap: 8px; }
+.lt-icon-btn {
+  position: relative;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: #ffffff; cursor: pointer; color: #1e293b;
+  flex-shrink: 0; transition: border-color 0.15s;
+}
+.lt-icon-btn:hover { border-color: #cbd5e1; }
+.lt-icon-btn svg { width: 16px; height: 16px; }
+.lt-notif-dot {
+  position: absolute; top: 5px; right: 5px;
+  width: 9px; height: 9px;
+  background: #0f172a; border-radius: 50%; border: 1.5px solid #ffffff;
+}
+.lt-avatar {
+  width: 32px; height: 32px;
+  background: #e2e8f0; border-radius: 50%;
+  cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #475569;
+}
+
+/* ============================================================
+   BODY LAYOUT
+   ============================================================ */
+.body-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - 48px);
+}
+
+/* ============================================================
+   LEFT PANEL — GRC Assistant
+   ============================================================ */
+.chat-panel {
+  flex: 0 0 44%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+  background: #F6F6F9;
+}
+.chat-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 24px;
+  scrollbar-width: none;
+}
+.chat-scroll::-webkit-scrollbar { display: none; }
+
+.msg-date {
+  text-align: center;
+  font-size: 12px;
+  color: var(--t-tertiary);
+  padding: 20px 0 16px;
+  position: relative;
+}
+.msg-date::before, .msg-date::after {
+  content: '';
+  position: absolute;
+  top: calc(50% + 2px);
+  height: 1px;
+  background: var(--border);
+}
+.msg-date::before { left: 0; width: calc(50% - 52px); }
+.msg-date::after  { right: 0; width: calc(50% - 52px); }
+
+.msg-agent-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.msg-agent-icon {
+  width: 28px; height: 28px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.msg-agent-icon img { width: 28px; height: 28px; display: block; }
+.msg-agent-meta-col { display: flex; flex-direction: column; gap: 1px; }
+.msg-agent-name { font-size: 13px; font-weight: 600; color: var(--t-secondary); }
+.msg-agent-time { font-size: 11px; color: var(--t-tertiary); }
+
+.msg-body-p {
+  font-size: 14px;
+  color: var(--t-secondary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.msg-body-p:last-of-type { margin-bottom: 0; }
+.msg-body-p strong { color: var(--t-primary); font-weight: 700; }
+
+.msg-steps-label {
+  font-size: 14px;
+  color: var(--t-secondary);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+/* Step cards */
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.step-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.step-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.step-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-secondary);
+  background: #ffffff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  color: var(--t-tertiary);
+  flex-shrink: 0;
+}
+.step-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--t-primary);
+  line-height: 1.3;
+}
+.step-body {
+  font-size: 13px;
+  color: var(--t-secondary);
+  line-height: 1.55;
+  padding-left: 34px;
+}
+
+.step-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 34px;
+  margin-top: 8px;
+}
+.step-tag-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--t-secondary);
+  line-height: 1.4;
+}
+.step-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 2px 9px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.step-tag-fact       { background: var(--tag-fact-bg); border: 1px solid var(--tag-fact-border); color: var(--tag-fact-text); }
+.step-tag-assumption { background: var(--tag-assumption-bg); border: 1px solid rgba(180,83,9,0.25); color: var(--tag-assumption); }
+.step-tag-emerging   { background: var(--tag-emerging-bg); border: 1px solid rgba(211,34,42,0.2); color: var(--tag-emerging); }
+
+.step-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 34px;
+  margin-top: 8px;
+}
+.step-example {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--t-secondary);
+  line-height: 1.5;
+}
+.step-ex-icon {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.step-ex-icon svg { width: 10px; height: 10px; }
+.step-ex-icon.negative { background: rgba(211,34,42,0.1); }
+.step-ex-icon.negative svg { color: #D3222A; }
+.step-ex-icon.positive { background: rgba(22,163,74,0.12); }
+.step-ex-icon.positive svg { color: #16a34a; }
+.step-ex-icon.additive { background: #f4f4f5; border: 1px solid var(--border-secondary); }
+.step-ex-icon.additive svg { color: var(--t-tertiary); }
+
+.msg-closing {
+  font-size: 14px;
+  color: var(--t-secondary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.msg-question {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--t-primary);
+  margin-bottom: 14px;
+}
+
+.reaction-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+.reaction-btn {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--t-tertiary);
+  transition: all 0.15s;
+}
+.reaction-btn:hover { background: var(--bg-component); color: var(--t-secondary); }
+.reaction-btn svg { width: 16px; height: 16px; }
+
+.suggestions-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.suggestions-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  padding: 0 2px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--t-tertiary);
+  letter-spacing: 0.03em;
+}
+.suggestions-label svg { width: 13px; height: 13px; }
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 12px;
+  background: var(--bg-base);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--t-secondary);
+  cursor: pointer;
+  transition: background 0.15s;
+  line-height: 1.4;
+}
+.suggestion-item:hover { background: #e4e4e6; }
+.suggestion-arrow {
+  font-size: 13px;
+  color: var(--t-tertiary);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.suggestion-arrow svg { width: 14px; height: 14px; display: block; }
+
+/* Chat input footer */
+.chat-input-footer {
+  flex-shrink: 0;
+  padding: 14px 20px 18px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+}
+.chat-input-box {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 12px 16px 10px;
+  position: relative;
+}
+.chat-input-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 14px; right: 14px;
+  height: 1px;
+  background: linear-gradient(to right, #ffffff, #D3222A, #C247FA, #00AAF3, #ffffff);
+}
+.chat-placeholder {
+  font-size: 14px;
+  color: var(--t-tertiary);
+  padding: 2px 0 8px;
+  line-height: 1.5;
+}
+.chat-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+.chat-bar-btn {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--t-tertiary);
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+}
+.chat-bar-btn:hover { border-color: #cbd5e1; }
+.chat-bar-btn svg { width: 14px; height: 14px; }
+.chat-tools-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--t-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+.chat-tools-btn svg { width: 14px; height: 14px; }
+.chat-tools-btn:hover { color: var(--t-primary); }
+.chat-flex { flex: 1; }
+.chat-send-btn {
+  width: 28px; height: 28px;
+  background: #1e293b;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.chat-send-btn:hover { background: #0f172a; }
+.chat-send-btn svg { width: 13px; height: 13px; }
+
+/* ============================================================
+   RIGHT PANEL — document viewer
+   ============================================================ */
+.doc-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+}
+.doc-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px 20px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.12) transparent;
+}
+.doc-scroll::-webkit-scrollbar { width: 4px; }
+.doc-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 2px; }
+
+/* Tabs — Draft (selected) / Version 1 */
+.doc-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.doc-tab {
+  padding: 8px 0 10px;
+  margin-right: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--t-tertiary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: color 0.15s;
+  margin-bottom: -1px;
+}
+.doc-tab:hover { color: var(--t-secondary); }
+.doc-tab.active {
+  color: var(--t-primary);
+  border-bottom-color: var(--t-primary);
+}
+
+.doc-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--t-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.doc-meta {
+  font-size: 13px;
+  color: var(--t-secondary);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+.doc-meta strong { font-weight: 600; }
+.doc-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.doc-section { margin-bottom: 24px; }
+.doc-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--t-primary);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.3;
+}
+.doc-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--t-tertiary);
+  background: #f4f4f5;
+  border: 1px solid var(--border-secondary);
+  border-radius: 20px;
+  padding: 2px 9px;
+}
+.fact-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--tag-fact-text);
+  background: var(--tag-fact-bg);
+  border: 1px solid var(--tag-fact-border);
+  border-radius: 20px;
+  padding: 2px 9px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.emerging-inline {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--tag-emerging);
+  background: var(--tag-emerging-bg);
+  border: 1px solid rgba(211,34,42,0.2);
+  border-radius: 20px;
+  padding: 2px 9px;
+  vertical-align: middle;
+  margin: 0 3px;
+}
+.doc-fact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.doc-body {
+  font-size: 14px;
+  color: var(--t-secondary);
+  line-height: 1.6;
+}
+.doc-alert {
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 12px;
+}
+.doc-alert-head {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.doc-alert-head svg { width: 14px; height: 14px; flex-shrink: 0; }
+.doc-alert-body {
+  font-size: 13px;
+  line-height: 1.55;
+  padding-left: 22px;
+}
+.doc-alert-assumption {
+  background: #FFFBEB;
+  border: 1px solid rgba(180,83,9,0.2);
+}
+.doc-alert-assumption .doc-alert-head { color: #92400e; }
+.doc-alert-assumption .doc-alert-body { color: #92400e; }
+.doc-alert-emerging {
+  background: rgba(211,34,42,0.05);
+  border: 1px solid rgba(211,34,42,0.18);
+}
+.doc-alert-emerging .doc-alert-head { color: #D3222A; }
+.doc-alert-emerging .doc-alert-body { color: #b91c1c; }
+.doc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  background: #ffffff;
+}
+.btn-outline {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font);
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.btn-outline:hover { background: #f4f4f5; border-color: #d4d4d8; }
+.btn-dark {
+  background: #1e293b;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.btn-dark:hover { background: #0f172a; }
+
+</style>
+</head>
+<body>
+
+<div style="display:flex; flex-direction:column; height:100vh; overflow:hidden;">
+
+  <header class="lt-header">
+    <a class="lt-logo" href="#">
+      <div class="lt-logo-mark"><img src="D_icon.png" alt="Diligent" width="24" height="24"></div>
+      Diligent
+    </a>
+    <div class="lt-spacer"></div>
+    <nav class="lt-header-nav">
+      <button type="button" class="lt-icon-btn" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="lt-notif-dot"></span>
+      </button>
+      <button type="button" class="lt-icon-btn" aria-label="More options">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+      </button>
+      <div class="lt-avatar" role="img" aria-label="Account">AC</div>
+    </nav>
+  </header>
+
+  <div class="body-layout">
+
+    <aside class="chat-panel">
+      <div class="chat-scroll">
+
+        <div class="msg-date">12 April 2026</div>
+
+        <div class="msg-agent-header">
+          <div class="msg-agent-icon">
+            <img src="D_icon.png" alt="" width="28" height="28">
+          </div>
+          <div class="msg-agent-meta-col">
+            <span class="msg-agent-name">GRC Assistant</span>
+            <span class="msg-agent-time">03:14 PM</span>
+          </div>
+        </div>
+
+        <p class="msg-body-p">Your draft <strong>Cybersecurity Risk — Situational Overview</strong> is ready.</p>
+        <p class="msg-body-p">Take a look and let me know if you'd like any changes to the charts or narratives. You can also switch to Editor mode to make manual edits.</p>
+
+        <p class="msg-steps-label">Steps I'll follow in this process:</p>
+
+        <div class="steps-list">
+
+          <div class="step-card">
+            <div class="step-card-header">
+              <span class="step-num">1</span>
+              <span class="step-title">Drafting situational overview</span>
+            </div>
+            <div class="step-body">Generating 1-page board-level summary across four sections: current situation, why it matters, what has changed, and key uncertainties. Writing in plain English — no technical jargon.</div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-header">
+              <span class="step-num">2</span>
+              <span class="step-title">Tagging statements by evidence type</span>
+            </div>
+            <div class="step-body">Each statement tagged to its evidential basis:</div>
+            <div class="step-tags">
+              <div class="step-tag-row">
+                <span class="step-tag step-tag-fact">Fact</span>
+                Directly evidenced in the Evidence Pack — board can rely on this
+              </div>
+              <div class="step-tag-row">
+                <span class="step-tag step-tag-assumption">Assumption</span>
+                Reasonable inference — management confirmation needed
+              </div>
+              <div class="step-tag-row">
+                <span class="step-tag step-tag-emerging">Emerging</span>
+                External signal — no current internal evidence yet
+              </div>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-header">
+              <span class="step-num">3</span>
+              <span class="step-title">Adapting tone for board audience</span>
+            </div>
+            <div class="step-body">Technical language translated for board consumption:</div>
+            <div class="step-examples">
+              <div class="step-example">
+                <div class="step-ex-icon negative" aria-hidden="true">
+                  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2.5 2.5l5 5M7.5 2.5l-5 5"/></svg>
+                </div>
+                <span>"NIST CSF AC-2 control ineffective"</span>
+              </div>
+              <div class="step-example">
+                <div class="step-ex-icon positive" aria-hidden="true">
+                  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5.5l2.5 2.5 3.5-4"/></svg>
+                </div>
+                <span>"Unauthorised access could expose customer data, creating regulatory and reputational risk"</span>
+              </div>
+              <div class="step-example">
+                <div class="step-ex-icon additive" aria-hidden="true">
+                  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 2v6M2 5h6"/></svg>
+                </div>
+                <span>"Our control posture is stronger than 65% of financial services peers — but the 3 gaps that remain are in areas regulators are actively scrutinising"</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="msg-closing">Situational overview drafted. Review the report on the right — probe any section or ask for revisions before steering the deep dive.</p>
+        <p class="msg-question">Would you like me to change anything in the draft now?</p>
+
+        <div class="reaction-row">
+          <button type="button" class="reaction-btn" title="Helpful">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
+          </button>
+          <button type="button" class="reaction-btn" title="Not helpful">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17"/></svg>
+          </button>
+          <button type="button" class="reaction-btn" title="Copy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          </button>
+          <button type="button" class="reaction-btn" title="More">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="suggestions-panel">
+          <div class="suggestions-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+            Suggestions
+          </div>
+          <button type="button" class="suggestion-item">
+            <span class="suggestion-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+            Strengthen the vendor risk section
+          </button>
+          <button type="button" class="suggestion-item">
+            <span class="suggestion-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+            Add more peer comparison context
+          </button>
+          <button type="button" class="suggestion-item">
+            <span class="suggestion-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+            What's the basis for the SEC gap?
+          </button>
+        </div>
+
+      </div>
+
+      <div class="chat-input-footer">
+        <div class="chat-input-box">
+          <div class="chat-placeholder">Change any section or ask a revision</div>
+          <div class="chat-bar">
+            <button type="button" class="chat-bar-btn" aria-label="Attach file">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+            </button>
+            <button type="button" class="chat-tools-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+              Tools
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="chat-flex"></div>
+            <button type="button" class="chat-bar-btn" aria-label="Voice input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+            <button type="button" class="chat-send-btn" aria-label="Send">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="doc-panel">
+      <div class="doc-scroll">
+
+        <div class="doc-tabs" role="tablist">
+          <button type="button" class="doc-tab active" role="tab" aria-selected="true">Draft</button>
+          <button type="button" class="doc-tab" role="tab" aria-selected="false">Version 1</button>
+        </div>
+
+        <h1 class="doc-title">Cybersecurity Risk — Situational Overview</h1>
+        <div class="doc-meta">
+          Scope: <strong>SEC Peer Incident Response</strong> · Created on: <strong>Feb 24, 2026</strong> · Audience: <strong>Audit Committee</strong>
+        </div>
+
+        <hr class="doc-divider">
+
+        <section class="doc-section">
+          <h2 class="doc-section-title">Current Situation</h2>
+          <div class="doc-fact-row">
+            <span class="fact-chip">Fact</span>
+            <div class="doc-body">A peer financial services firm has received an SEC enforcement action for deficient cybersecurity controls under the new disclosure requirements. Our review finds structural similarities: unauthorised access risks exist across 8 controls, 3 critical vendors share the same access architecture vulnerability, and our cyber risk sits above appetite in the Enterprise Risk Register.</div>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2 class="doc-section-title">
+            Why It Matters
+            <span class="doc-badge">Updated</span>
+          </h2>
+          <div class="doc-fact-row">
+            <span class="fact-chip">Fact</span>
+            <div class="doc-body">Unauthorised access could trigger SEC 8-K disclosure obligations within 4 business days. The 3 critical vendors collectively service 40% of customer transaction volume — a breach at any one could be material. <span class="emerging-inline">Emerging</span> Vendor breach notification obligations under existing contracts have not yet been assessed — this could accelerate disclosure timelines materially and is flagged for urgent review.</div>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2 class="doc-section-title">
+            What Has Changed
+            <span class="doc-badge">Updated</span>
+          </h2>
+          <div class="doc-fact-row">
+            <span class="fact-chip">Fact</span>
+            <div class="doc-body">Since Q3 2025: CM-6 remediation is 47 days overdue, critical vendor high-risk count has risen from 1 to 3.</div>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2 class="doc-section-title">Key Uncertainties</h2>
+          <div class="doc-body" style="margin-bottom: 4px;">
+            Since the last Audit Committee review (Q3 2025), the CM-6 remediation plan has fallen 47 days overdue with no escalation recorded. The number of critical vendors with high cyber risk scores has increased from 1 to 3. <strong>ASSUMPTION</strong> No material changes to the SEC disclosure process are assumed to have occurred, based on absence of updates in Compliance Maps — management confirmation required.
+          </div>
+          <div class="doc-alert doc-alert-assumption">
+            <div class="doc-alert-head">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.865 21L12 3l10.135 18H1.865zm2.585-1.5h15.1L12 6 4.45 19.5zM12 17.808a.77.77 0 00.577-.231.77.77 0 00.23-.577.77.77 0 00-.23-.577.77.77 0 00-.577-.23.77.77 0 00-.577.23.77.77 0 00-.23.577.77.77 0 00.23.577.77.77 0 00.577.23zM11.25 15.192h1.5V10.2h-1.5v4.992z"/></svg>
+              Assumption
+            </div>
+            <div class="doc-alert-body">8-K materiality process gap inferred from absence of documentation — not confirmed absent. Management sign-off required before including in final report.</div>
+          </div>
+          <div class="doc-alert doc-alert-emerging">
+            <div class="doc-alert-head">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Emerging
+            </div>
+            <div class="doc-alert-body">Vendor breach notification obligations under existing contracts not yet assessed — this could accelerate disclosure timelines materially.</div>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="doc-footer">
+        <button type="button" class="btn-outline">Back to investigation</button>
+        <button type="button" class="btn-dark">Preview document</button>
+      </div>
+    </main>
+
+  </div>
+
+</div>
+
+</body>
+</html>

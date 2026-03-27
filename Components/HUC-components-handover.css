@@ -86,7 +86,7 @@
      Available icons (Icons/ folder):
        AI.svg, Active.svg, Audit.svg, Checked.svg, Document.svg,
        Done.svg, Edit.svg, Error.svg, Glow.svg, Info.svg,
-       Inprogress.svg, Link.svg, Next.svg, Pending.svg, Recent.svg,
+       Inprogress.svg, Link.svg, Next.svg, Pending-task.svg, Recent.svg,
        Sort ascending.svg, Sort descending.svg, Success.svg,
        Warning.svg, Warning_muted.svg
 
@@ -389,17 +389,6 @@
   border-radius: 16px;
   padding: 14px;
   gap: 8px;
-}
-
-/* ── Card body typography vars ──
-   Classes live in Components/card-typography.css (not yet included).
-   Vars kept here so .table th/td can reference them.
-   ──────────────────────────────────────────────────────────────── */
-:root {
-  --card-body:    16px;
-  --card-body-md: 14px;
-  --card-body-sm: 12px;
-  --card-body-xs: 11px;
 }
 
 
@@ -864,4 +853,4 @@
   flex-shrink: 0;
 }
 
-
+/* ── Global Typography moved to HUC-components.css (section 6) ── */

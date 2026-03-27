@@ -83,12 +83,14 @@
   border: none;
   outline: none;
   resize: none;
+  /* body-default — uses .body-default token: 14px / 400 */
   font-size: 14px;
-  color: var(--t-primary);
+  color: var(--fc-default, var(--t-primary));
   font-family: var(--font);
-  line-height: 1.5;
+  line-height: 20px;
+  letter-spacing: 0.2px;
 }
-.chat-input-row textarea::placeholder { color: var(--t-tertiary); }
+.chat-input-row textarea::placeholder { color: var(--fc-muted, var(--t-tertiary)); }
 
 /* Bottom row: chips left, actions right */
 .chat-bottom {
@@ -104,9 +106,10 @@
   gap: 6px;
   flex-wrap: wrap;
 }
+/* body-default — uses .body-default token: 14px / 400 */
 .chat-chip {
   font-size: 14px;
-  color: var(--t-secondary);
+  color: var(--fc-muted, var(--t-secondary));
   background: var(--bg-base);
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -114,7 +117,7 @@
   cursor: pointer;
   transition: all 0.15s;
 }
-.chat-chip:hover { border-color: #cbd5e1; color: var(--t-primary); }
+.chat-chip:hover { border-color: #cbd5e1; color: var(--fc-default, var(--t-primary)); }
 
 /* Button group — buttons styled by buttons.css */
 .chat-actions {

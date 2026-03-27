@@ -264,23 +264,25 @@
   gap: 6px;
 }
 
+/* Inherits .h3-bold token: 18px / 600 */
 .section-title {
   font-family: 'Plus Jakarta Sans', var(--font, sans-serif);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 24px;
-  letter-spacing: 0%;
-  color: #282E37;
+  letter-spacing: 0;
+  color: var(--fc-default, #282E37);
   margin: 0;
 }
 
+/* Inherits .body-default + fc-muted tokens */
 .section-subtitle {
   font-family: 'Plus Jakarta Sans', var(--font, sans-serif);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 20px;
   letter-spacing: 0.2px;
-  color: #6F7377;
+  color: var(--fc-muted, #6F7377);
   margin: 0;
 }
 
@@ -291,23 +293,25 @@
   gap: 6px;
 }
 
+/* Inherits .h4-bold token: 16px / 600 */
 .card-title {
   font-family: 'Plus Jakarta Sans', var(--font, sans-serif);
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
-  letter-spacing: 0%;
-  color: #282E37;
+  letter-spacing: 0;
+  color: var(--fc-default, #282E37);
   margin: 0;
 }
 
+/* Inherits .body-md + fc-muted tokens */
 .card-subtitle {
   font-family: 'Plus Jakarta Sans', var(--font, sans-serif);
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
   letter-spacing: 0.2px;
-  color: #6F7377;
+  color: var(--fc-muted, #6F7377);
   margin: 0;
 }
 
@@ -671,3 +675,166 @@
 }
 
 
+/* ────────────────────────────────────────────────────────────────
+   6. GLOBAL TYPOGRAPHY
+   Lightweight type scale + font-color tokens.
+
+   Headings:
+     .h1            — 40px / 400  (hero title)
+     .h1-bold        — 40px / 600
+     .h2            — 28px / 400
+     .h2-bold        — 28px / 600
+     .h3            — 18px / 400  (section title)
+     .h3-bold        — 18px / 600
+     .h4            — 16px / 400  (card title)
+     .h4-bold        — 16px / 600
+
+   Body:
+     .body-default  — 14px / 400
+     .body-md       — 12px / 400
+     .body-sm       — 11px / 400
+
+   Utility:
+     .font-btn-md   — 16px / 600, lh 25px, ls 1%
+     .font-btn-sm   — 14px / 600, lh 20px, ls 1%
+     .eyebrow       — 11px / 600, uppercase, tracked
+
+   Font colors:
+     .fc-default    — #282E37
+     .fc-muted      — #6F7377
+     .fc-disabled   — #A0A2A5
+     .fc-inverse    — #ffffff
+
+   Component class mapping (Plan A):
+     .section-title    → .h3-bold tokens   (18px / 600)
+     .section-subtitle → .body-default + fc-muted
+     .card-title       → .h4-bold tokens   (16px / 600)
+     .card-subtitle    → .body-md + fc-muted
+
+   Notes:
+     • All headings default to regular (400). Add -bold for 600.
+     • Every class sets font-family so it works outside card context.
+
+   ⛔ AI: Do NOT create additional weight variants (.h1-light,
+      .h1-semibold, etc.). Only regular (400) and bold (600) exist.
+      Do NOT add margin or padding to heading classes — spacing is
+      handled by layout classes (.section, .card-header, etc.).
+      Do NOT change hex values for font colors.
+   ──────────────────────────────────────────────────────────────── */
+
+/* ── Font color tokens (CSS variables) ───────────────────── */
+:root {
+  --fc-default:  #282E37;
+  --fc-muted:    #6F7377;
+  --fc-disabled: #A0A2A5;
+  --fc-inverse:  #ffffff;
+}
+
+/* ── Font color utility classes ──────────────────────────── */
+.fc-default  { color: var(--fc-default); }
+.fc-muted    { color: var(--fc-muted); }
+.fc-disabled { color: var(--fc-disabled); }
+.fc-inverse  { color: var(--fc-inverse); }
+
+/* ── Headings ────────────────────────────────────────────── */
+
+/* H1 — 40px */
+.h1, .h1-bold {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--fc-default);
+  margin: 0;
+}
+.h1      { font-weight: 300; }
+.h1-bold { font-weight: 600; }
+
+/* H2 — 28px */
+.h2, .h2-bold {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 28px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--fc-default);
+  margin: 0;
+}
+.h2      { font-weight: 400; }
+.h2-bold { font-weight: 600; }
+
+/* H3 — 18px (section title) */
+.h3, .h3-bold {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--fc-default);
+  margin: 0;
+}
+.h3      { font-weight: 400; }
+.h3-bold { font-weight: 600; }
+
+/* H4 — 16px (card title) */
+.h4, .h4-bold {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--fc-default);
+  margin: 0;
+}
+.h4      { font-weight: 400; }
+.h4-bold { font-weight: 600; }
+
+/* ── Body ────────────────────────────────────────────────── */
+.body-default {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  color: var(--fc-default);
+}
+.body-md {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+  color: var(--fc-default);
+}
+.body-sm {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  color: var(--fc-default);
+}
+
+/* ── Utility: button font sizes ──────────────────────────── */
+.font-btn-md {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 25px;
+  letter-spacing: 0.01em;
+}
+.font-btn-sm {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+}
+
+/* ── Utility: eyebrow ────────────────────────────────────── */
+.eyebrow {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+}
