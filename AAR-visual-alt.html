@@ -61,6 +61,8 @@
     border: none;
     width: 100%;
     background: #f0f0f1;          /* match content bg — hides white flash between loads */
+    visibility: hidden;            /* prevent any rendering until theme is ready */
+    opacity: 0;
   }
 </style>
 </head>
@@ -73,7 +75,7 @@
 
 <!-- Step indicator -->
 <div class="wf-step-bar">
-  <span class="wf-step active" data-step="0">01. Investigation</span>
+  <span class="wf-step active" data-step="0">01. Scope</span>
   <span class="wf-arrow">&rarr;</span>
   <span class="wf-step" data-step="1">02. Evidence</span>
   <span class="wf-arrow">&rarr;</span>
@@ -81,7 +83,7 @@
   <span class="wf-arrow">&rarr;</span>
   <span class="wf-step" data-step="3">04. Veracity scoring</span>
   <span class="wf-arrow">&rarr;</span>
-  <span class="wf-step" data-step="4">05. Preview-Approve</span>
+  <span class="wf-step" data-step="4">05. Preview and Approve</span>
 </div>
 
 <iframe class="wf-frame" id="wf-frame"></iframe>
@@ -93,7 +95,7 @@
 
   // Flow definition — bridge script in each source file handles button hooking
   const flow = [
-    { file: '01-Investigation.html' },
+    { file: '01-Scope.html' },
     { file: '02-Evidence-v2.html' },
     { file: '03-Synthesis-to-Chat.html' },
     { file: '04-Veracity-scoring.html' },
@@ -119,11 +121,13 @@
 
   // ── HUC6 Theme Injection ──
   // Injects theme CSS, replaces app bar and chat bar in each iframe
-  function applyHUC6Theme(iframeDoc, stepIndex) {
-    // 1. Inject theme-huc6.css
+  function applyHUC6Theme(iframeDoc, stepIndex, onReady) {
+    // 1. Inject theme-huc6.css — wait for it to load before revealing
     const link = iframeDoc.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'Components/theme-huc6.css';
+    link.onload = () => { if (onReady) onReady(); };
+    link.onerror = () => { if (onReady) onReady(); };  // show anyway on error
     iframeDoc.head.appendChild(link);
 
     // 2. Replace ALL app bar content (some files have one per screen)
@@ -133,6 +137,10 @@
       0: ['lt-screen-0'],       // 01-Investigation first screen
       4: ['screen-0', null]     // 05-Preview-Approve first screen (null = not inside any screen div)
     };
+
+    // User profiles
+    const thomasChen = { name: 'Thomas Chen', role: 'Board Member', photo: 'https://randomuser.me/api/portraits/men/32.jpg' };
+    const alexandraChen = { name: 'Alexandra Chen', role: 'Chief Audit Executive', photo: 'https://randomuser.me/api/portraits/women/44.jpg' };
 
     const headers = iframeDoc.querySelectorAll('.app-header');
     headers.forEach(header => {
@@ -145,6 +153,9 @@
       const isBoardsCloud = bcScreens && (bcScreens.includes(screenId) || (!screenParent && bcScreens.includes(null)));
       const logoText = isBoardsCloud ? 'Boards Cloud' : 'Automated Audit Reporting';
 
+      // Thomas Chen only on 01-Investigation screen 0, Alexandra everywhere else
+      const user = (stepIndex === 0 && screenId === 'lt-screen-0') ? thomasChen : alexandraChen;
+
       header.innerHTML = `
         <div class="app-logo"><div class="app-logo-mark"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAARxJREFUeAGVkkFOwzAQRec7hqo7U1WwqEDdsqlyBLgBnAQ4AidpOQEcAU6AJcSaXACRdUtmmLQqJE7dmL+IlRnPmz+2QarH85lQTKCSBJ4MP1y/vy3CtKE+CTn9XIyXMv/MZx9feZ7/C2DV2+myomMlATQV8KtCrpIAQxE6W1U00FVH+TMFnivE7QWMv5km2tnI5ngOMzTTjg3f7gTUlifa1VXcig9sC0AQulnvDy2frFgh3UtBJ0JOx5j+AkZqeRR0bSoYYasNoLY85PhTMFoLRHJr63uKa9kMsVTZ/5AoZh/Fkfc+CZDt2KUjPddrEuDAoNOdGPfJgHAECO7UfpEEaN8ACoi51OKnbcT2AWxGhRI8GC/6u9Dispn/AYHpXM6hcNiKAAAAAElFTkSuQmCC" alt="Diligent"></div>${logoText}</div>
         <div class="app-spacer"></div>
@@ -155,10 +166,10 @@
           </button>
           <div class="app-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="app-notif-dot" style="background:#ef4444;"></span></div>
           <div style="display:flex; align-items:center; gap:10px; padding-left:4px;">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Alexandra Chen" style="width:36px; height:36px; border-radius:50%; object-fit:cover;">
+            <img src="${user.photo}" alt="${user.name}" style="width:36px; height:36px; border-radius:50%; object-fit:cover;">
             <div style="display:flex; flex-direction:column; line-height:1.3;">
-              <span style="font-size:13px; font-weight:400; color:#1e293b;">Alexandra Chen</span>
-              <span style="font-size:11px; color:#94a3b8;">Chief Audit Executive</span>
+              <span style="font-size:13px; font-weight:400; color:#1e293b;">${user.name}</span>
+              <span style="font-size:11px; color:#94a3b8;">${user.role}</span>
             </div>
           </div>
         </div>`;
@@ -197,12 +208,12 @@
     const overrideStyle = iframeDoc.createElement('style');
     overrideStyle.textContent = `
       /* Bottom gap so floating chat pill doesn't cover active content.
-         Targets all possible scroll containers across all 5 workflow files. */
-      .page-scroll { padding-bottom: 32px !important; }
-      .s0-editor-scroll { padding-bottom: 32px !important; }
-      .lt-left { padding-bottom: 32px !important; }
-      .page-inner { padding-bottom: 32px !important; }
-      .screen.active > .page-body { padding-bottom: 32px !important; }
+         Pill top edge is ~78px from viewport bottom (20px padding + 58px pill).
+         102px = 78px pill + 24px clearance above it.
+         Only on actual scroll containers — NOT on nested children like .page-inner. */
+      .page-scroll { padding-bottom: 102px !important; }
+      .s0-editor-scroll { padding-bottom: 102px !important; }
+      .lt-left { padding-bottom: 102px !important; }
 
       /* Force all hero titles to 300 — no bold anywhere */
       .hero-title, .hero-title strong,
@@ -227,9 +238,17 @@
   frame.addEventListener('load', () => {
     try {
       const iframeDoc = frame.contentDocument || frame.contentWindow.document;
-      applyHUC6Theme(iframeDoc, currentStep);
+      applyHUC6Theme(iframeDoc, currentStep, () => {
+        // 50ms delay after CSS loads — ensures browser has parsed + painted themed content
+        setTimeout(() => {
+          frame.style.visibility = 'visible';
+          frame.style.transition = 'opacity 0.18s ease-in';
+          frame.style.opacity = '1';
+        }, 50);
+      });
     } catch(e) {
       console.warn('⚠️ HUC6 theme injection failed — are you using file:// protocol? Use a local server instead.\n  python3 -m http.server 8080\n  Then open http://localhost:8080/AAR-visual-alt.html', e);
+      frame.style.opacity = '1';  // show anyway on error
     }
   });
 
@@ -238,6 +257,9 @@
     currentStep = stepIndex;
     const step = flow[stepIndex];
     updateStepIndicator(stepIndex);
+    frame.style.transition = 'none';
+    frame.style.visibility = 'hidden';
+    frame.style.opacity = '0';
     frame.src = step.file + '?v=' + Date.now();
   }
 

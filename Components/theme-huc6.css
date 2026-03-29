@@ -305,11 +305,9 @@ html:root {
   font-weight: 400;
 }
 
-/* Hero stepper — drop bold from active/current steps */
-.hero-step.active,
-.hero-step.pending,
-.hero-step.current {
-  font-weight: 400;
+/* Hero stepper — all steps use 600 weight */
+.hero-step {
+  font-weight: 600;
 }
 
 /* Hero stepper label */

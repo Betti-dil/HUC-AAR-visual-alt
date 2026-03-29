@@ -11,7 +11,7 @@
 
   // Map of button text → step to advance to
   var triggers = {
-    'Authorize investigation': 1,
+    'Authorize assurance report': 1,
     'Confirm Evidence pack': 2,
     'Confirm selection and authorize': 3,
     'Confirm and authorize': 3,

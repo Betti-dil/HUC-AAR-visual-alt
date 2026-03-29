@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>01-Investigation</title>
+<title>01-Scope</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:wght@300;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -402,7 +402,7 @@
                 </div>
                 <div class="alert-card-sub">SEC enforcement: peer fintech deficient cybersecurity controls — $18M fine. Board-level disclosure required within 4 business days.<br><br>SEC.gov · Feb 20, 2026</div>
                 <div style="display:flex;margin-top:8px;">
-                  <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center;" onclick="ltShow(1)"><img src="Icons/AI.svg" style="height:14px;width:14px;filter:invert(1);"> Request assurance report</button>
+                  <button class="btn btn-primary btn-md" onclick="ltShow(1)"><img src="Icons/AI.svg" style="height:16px;width:16px;filter:invert(1);"> Request assurance report</button>
                 </div>
               </div>
             </div>
@@ -494,7 +494,7 @@
             </div>
             <div class="hero-notif">
               <div class="hero-notif-message">
-                <div class="hero-notif-title">Thomas Chen has requested an assurance report.</div>
+                <div class="hero-notif-title" style="font-weight:600;">Your Board member Thomas Chen has requested an assurance report.</div>
                 <div class="hero-notif-body">Assess cybersecurity control posture and SEC disclosure readiness before Thursday's Audit Committee meeting.</div>
               </div>
               <div class="hero-notif-actions">
@@ -616,18 +616,13 @@
                 Audit report request
               </span>
             </div>
-            <h1 class="hero-title">Audit reporting <strong>investigation</strong> has started.</h1>
+            <h1 class="hero-title">Scope refinement — <strong>Starting assurance report.</strong></h1>
           </div>
           <div class="hero-stepper">
             <div class="hero-stepper-label">Workflow status</div>
             <div class="hero-stepper-steps">
               <div class="hero-step active current">
                 <div class="hero-step-icon"><img src="Icons/Active.svg" width="20" height="20" alt=""></div>
-                Investigation
-              </div>
-              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="hero-step">
-                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
                 Scope
               </div>
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
@@ -638,12 +633,7 @@
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step">
                 <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
-                Synthesis
-              </div>
-              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="hero-step">
-                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
-                Edit &amp; Authorize
+                Synthesis &amp; Edit
               </div>
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step">
@@ -653,7 +643,7 @@
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step">
                 <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
-                Approve
+                Preview &amp; Approve
               </div>
             </div>
           </div>
@@ -725,10 +715,11 @@
 
           </div>
           <div class="card-default" style="gap:12px;">
-          <div class="card-header">
+          <div class="card-header" style="gap:0;">
             <div class="card-title">Data domains to query</div>
             <div class="card-subtitle">All 6 recommended domains are pre-selected. Vault is optional — speak-up themes only, no PII ever exposed.</div>
           </div>
+          <div class="section-title" style="margin:0;">Diligent data sources</div>
           <div class="s-domain-grid">
             <div class="s-domain-card on">
               <div><div class="s-domain-name">Projects</div><div class="s-domain-desc">Findings, walkthroughs, remediation</div><div class="s-domain-tag">Recommended</div></div>
@@ -754,10 +745,34 @@
               <div><div class="s-domain-name">3rd Risk</div><div class="s-domain-desc">Vendor cyber scores, questionnaires</div><div class="s-domain-tag">Recommended</div></div>
               <div><div class="s-toggle" style="width:32px;height:18px;"></div></div>
             </div>
-            <div class="s-domain-card off" style="grid-column:span 2;">
+            <div class="s-domain-card off">
               <div><div class="s-domain-name">Vault</div><div class="s-domain-desc">Speak-up themes only — no PII</div><div class="s-domain-tag optional">Optional</div></div>
               <div><div class="s-toggle off" style="width:32px;height:18px;"></div></div>
             </div>
+            <div class="s-domain-card" style="visibility:hidden;"></div>
+          </div>
+          <hr style="border:none; border-top:1px solid rgba(0,0,0,0.08); margin:0;">
+          <div class="section-title" style="margin:0;">External sources</div>
+          <div class="s-domain-grid">
+            <div class="s-domain-card on">
+              <div><div class="s-domain-name">SEC EDGAR</div><div class="s-domain-desc">Enforcement actions, filings, disclosures</div><div class="s-domain-tag">Recommended</div></div>
+              <div><div class="s-toggle" style="width:32px;height:18px;"></div></div>
+            </div>
+            <div class="s-domain-card on">
+              <div><div class="s-domain-name">NIST NVD</div><div class="s-domain-desc">Vulnerability data, CVE records</div><div class="s-domain-tag">Recommended</div></div>
+              <div><div class="s-toggle" style="width:32px;height:18px;"></div></div>
+            </div>
+            <div class="s-domain-card on">
+              <div><div class="s-domain-name">Peer Benchmarks</div><div class="s-domain-desc">Industry control maturity comparisons</div><div class="s-domain-tag">Recommended</div></div>
+              <div><div class="s-toggle" style="width:32px;height:18px;"></div></div>
+            </div>
+            <div class="s-domain-card off">
+              <div><div class="s-domain-name">News &amp; Media</div><div class="s-domain-desc">Regulatory signals, sector incidents</div><div class="s-domain-tag optional">Optional</div></div>
+              <div><div class="s-toggle off" style="width:32px;height:18px;"></div></div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:flex-end;">
+            <button class="btn btn-secondary btn-md"><img src="Icons/AI.svg" style="height:16px;width:16px;"> Add another external source</button>
           </div>
           </div>
         </div><!-- end s-section -->
@@ -844,16 +859,11 @@
                 Audit report request
               </span>
             </div>
-            <h1 class="hero-title"><strong>Finalize the scope</strong> of the audit report.</h1>
+            <h1 class="hero-title">Scope finalization — <strong>Authorize assurance report.</strong></h1>
           </div>
           <div class="hero-stepper">
             <div class="hero-stepper-label">Workflow status</div>
             <div class="hero-stepper-steps">
-              <div class="hero-step done">
-                <div class="hero-step-icon"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
-                Investigation
-              </div>
-              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step active current">
                 <div class="hero-step-icon"><img src="Icons/Active.svg" width="20" height="20" alt=""></div>
                 Scope
@@ -866,12 +876,7 @@
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step">
                 <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
-                Synthesis
-              </div>
-              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="hero-step">
-                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
-                Edit &amp; Authorize
+                Synthesis &amp; Edit
               </div>
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step">
@@ -881,7 +886,7 @@
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step">
                 <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
-                Approve
+                Preview &amp; Approve
               </div>
             </div>
           </div>
@@ -941,7 +946,7 @@
             </div>
             <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
               <button class="btn btn-secondary btn-sm" onclick="ltShow(2)">Go back and edit</button>
-              <button class="btn btn-primary btn-md" onclick="ltShow(3)">Authorize investigation</button>
+              <button class="btn btn-primary btn-md" onclick="ltShow(3)">Authorize assurance report</button>
             </div>
           </div>
         </div>

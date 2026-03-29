@@ -596,11 +596,6 @@
             <div class="hero-stepper-steps">
               <div class="hero-step done">
                 <div class="hero-step-icon"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
-                Investigation
-</div>
-              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="hero-step done">
-                <div class="hero-step-icon"><img src="Icons/Done.svg" width="20" height="20" alt=""></div>
                 Scope
               </div>
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
@@ -611,12 +606,7 @@
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step active">
                 <div class="hero-step-icon"><img src="Icons/Active.svg" width="20" height="20" alt=""></div>
-                Synthesis
-              </div>
-              <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-              <div class="hero-step">
-                <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
-                Edit &amp; Authorize
+                Synthesis &amp; Edit
               </div>
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step">
@@ -626,7 +616,7 @@
               <span class="hero-step-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="hero-step">
                 <div class="hero-step-icon"><img src="Icons/Next.svg" width="20" height="20" alt=""></div>
-                Approve
+                Preview &amp; Approve
               </div>
             </div>
           </div>
@@ -779,7 +769,7 @@
                     <div class="alert-card-sub">AI Reporting · Draft · Just created</div>
                   </div>
                   <div class="alert-card-actions">
-                    <button class="btn btn-primary btn-md open-report-btn" type="button">View and edit report</button>
+                    <button class="btn btn-primary btn-md open-report-btn" type="button">View and edit draft</button>
                   </div>
                 </div>
               </div>
@@ -1213,7 +1203,7 @@
     }, 550);
   }
 
-  /* "View and edit report" button in Synthesis view */
+  /* "View and edit draft" button in Synthesis view */
   var openBtn = document.querySelector('#view-synthesis .open-report-btn');
   if (openBtn) openBtn.addEventListener('click', transitionToEdit);
 
