@@ -762,7 +762,7 @@
           </div>
           <!-- Hidden ACFE card — revealed by animation -->
           <div id="s2-acfe-card" style="display:none;">
-            <div class="s-domain-card on" style="animation: fadeSlideIn 0.4s ease forwards;">
+            <div class="s-domain-card on" style="animation: fadeSlideIn 0.8s ease-out forwards;">
               <div><div class="s-domain-name">ACFE</div><div class="s-domain-desc">Report to the Nations — fraud trends archive</div><div class="s-domain-tag">Added</div></div>
               <div><div class="s-toggle" style="width:32px;height:18px;"></div></div>
             </div>
@@ -797,11 +797,11 @@
       <div style="position:fixed; bottom:0; left:0; right:0; z-index:100; pointer-events:none; padding:0 0 20px;">
         <div style="width:45vw; min-width:500px; margin:0 auto; padding:0 24px; pointer-events:auto;">
           <div style="border-radius:16px; border:1px solid rgba(0,0,0,0.09); background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); padding:8px; box-shadow:0 -4px 32px rgba(0,0,0,0.10);">
-            <div style="display:flex; align-items:center; gap:12px;">
+            <div style="display:flex; align-items:flex-end; gap:12px;">
               <div style="display:flex; height:40px; width:40px; align-items:center; justify-content:center; border-radius:12px; background:#f8fafc; border:1px solid rgba(0,0,0,0.05); flex-shrink:0; padding:6px;">
                 <img src="Icons/D_icon.png" alt="" style="width:100%; height:100%; object-fit:contain;">
               </div>
-              <input id="s2-chat-input" type="text" placeholder="Ask about risks, assign owners, draft disclosures…" style="flex:1; background:transparent; font-size:14px; color:#1e293b; border:none; outline:none; font-family:'Plus Jakarta Sans',sans-serif;" />
+              <textarea id="s2-chat-input" rows="1" placeholder="Ask about risks, assign owners, draft disclosures…" style="flex:1; background:transparent; font-size:14px; color:#1e293b; border:none; outline:none; font-family:'Plus Jakarta Sans',sans-serif; resize:none; overflow:hidden; line-height:40px; max-height:120px; padding:0;"></textarea>
               <button id="s2-chat-send" style="display:flex; height:40px; width:40px; align-items:center; justify-content:center; border-radius:12px; background:#1e293b; color:#ffffff; border:none; cursor:pointer; flex-shrink:0; transition:background 0.15s;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
               </button>
@@ -1014,8 +1014,8 @@ document.addEventListener('click', e => {
 
 /* ── Add External Source animation ── */
 (function() {
-  var state = 0; // 0=idle, 1=prefilled, 2=url typed, 3=done
-  var prefill = 'Add this source to the list: ';
+  var state = 0; // 0=idle, 1=prefilled, 2=url pasted, 3=done
+  var prefill = 'Add one or more external sources: ';
   var url = 'https://www.acfe.com/fraud-resources/report-to-the-nations-archive';
 
   var addBtn = document.getElementById('s2-add-source-btn');
@@ -1030,34 +1030,35 @@ document.addEventListener('click', e => {
   var grids = acfe.closest('.card-default').querySelectorAll('.s-domain-grid');
   if (grids.length >= 2) extGrid = grids[1];
 
-  // Step 1: click "Add another external source" → prefill chatbox
+  // Step 1: click "Add another external source" → prefill chatbox (no auto-focus)
   addBtn.addEventListener('click', function() {
     if (state !== 0) return;
     state = 1;
     input.value = prefill;
-    input.focus();
     input.placeholder = '';
   });
 
-  // Step 2: click/focus on input → typewriter URL
-  // Walk up: input → flex row → rounded wrapper
+  // Auto-resize textarea to fit content
+  function autoResize() {
+    // Switch to wrapping line-height before measuring
+    input.style.lineHeight = '1.5';
+    input.style.paddingTop = '9px';
+    input.style.paddingBottom = '9px';
+    input.style.height = 'auto';
+    input.style.height = input.scrollHeight + 'px';
+  }
+
+  // Step 2: click in chatbox → instant paste of URL
   var chatbox = input.parentElement ? input.parentElement.parentElement : null;
 
   input.addEventListener('focus', function() {
     if (state !== 1) return;
     state = 2;
+    input.value = prefill + url;
+    autoResize();
     if (chatbox) {
       chatbox.style.boxShadow = '0 4px 24px rgba(0,0,0,0.18), 0 -4px 32px rgba(0,0,0,0.12)';
     }
-    var i = 0;
-    var timer = setInterval(function() {
-      if (i < url.length) {
-        input.value = prefill + url.substring(0, i + 1);
-        i++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 18);
   });
 
   // Step 3: press Enter or click Send → show ACFE card
@@ -1066,6 +1067,10 @@ document.addEventListener('click', e => {
     state = 3;
     input.value = '';
     input.placeholder = 'Ask about risks, assign owners, draft disclosures…';
+    input.style.height = 'auto';
+    input.style.lineHeight = '40px';
+    input.style.paddingTop = '0';
+    input.style.paddingBottom = '0';
     if (chatbox) {
       chatbox.style.boxShadow = '0 -4px 32px rgba(0,0,0,0.10)';
     }
@@ -1099,7 +1104,7 @@ document.addEventListener('click', e => {
 
 <style>
 @keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 </style>
