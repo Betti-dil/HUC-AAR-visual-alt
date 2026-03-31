@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06 — Report Distribution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:wght@300;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Components/layout.css">
+<link rel="stylesheet" href="Components/app-chrome.css">
+<link rel="stylesheet" href="Components/hero-section.css">
+<link rel="stylesheet" href="Components/chatbox.css">
+<link rel="stylesheet" href="Components/huc-components.css">
+<link rel="stylesheet" href="Components/alert-cards.css">
+<link rel="stylesheet" href="Components/headers.css">
+<style>
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --bg-base:         #f0f0f1;
+  --bg-primary:      #f0f0f1;
+  --bg-surface:      #ffffff;
+  --bg-elevated:     #ffffff;
+  --bg-sidebar:      #e8e8ea;
+  --bg-component:    #f4f4f5;
+  --bg-header:       rgba(240,240,241,0.85);
+
+  --t-primary:       #282E37;
+  --text-primary:    #282E37;
+  --t-secondary:     #525252;
+  --text-secondary:  #525252;
+  --t-tertiary:      #6F7377;
+  --text-muted:      #6F7377;
+  --text-very-muted: #A0A2A5;
+
+  --border:           rgba(0,0,0,0.09);
+  --border-primary:   rgba(0,0,0,0.09);
+  --border-secondary: rgba(0,0,0,0.14);
+
+  --green:   #16a34a;
+  --blue:    #1d4ed8;
+  --amber:   #b45309;
+  --red:     #D3222A;
+  --purple:  #7c3aed;
+  --orange:  #ea580c;
+  --brand:   #D3222A;
+
+  --ui-dark:          #1e293b;
+  --ui-darkest:       #0f172a;
+  --ui-border-strong: #e2e8f0;
+  --ui-surface-tint:  #f1f5f9;
+  --ui-text-dim:      #64748b;
+
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+/* ============================================================
+   SCREEN 0 — Boards Overview (2-column: book list + floating sidebar)
+   ============================================================ */
+
+/* Screen system — absolute positioning (Screen 0 has unique body layout) */
+#lt-screens { overflow: hidden; position: relative; height: 100%; }
+.lt-screen { display: none; flex-direction: column; position: absolute; inset: 0; }
+.lt-screen.active { display: flex; }
+.lt-screen .app-header { position: relative; flex-shrink: 0; }
+.lt-screen .lt-body { flex: 1; height: auto; min-height: 0; }
+
+/* App header needs sticky in this file (app-chrome.css doesn't set position) */
+.app-header { position: sticky; top: 0; }
+
+/* Body layout — 2 columns centered at 1024px */
+.lt-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - 48px);
+}
+#lt-screen-0 .lt-body {
+  justify-content: center;
+  background: var(--bg-base);
+  padding: 20px;
+}
+.lt-main {
+  flex: 1;
+  background: var(--bg-base);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#lt-screen-0 .lt-main {
+  max-width: 1024px;
+  width: 100%;
+}
+.lt-main-row {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Center column — topbar + list */
+.lt-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-base);
+}
+.lt-topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 24px 24px 32px;
+  flex-shrink: 0;
+}
+.lt-topbar-title {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--t-primary);
+  line-height: 1.2;
+}
+
+/* Left panel — book list */
+.lt-left {
+  flex: 1;
+  padding: 0 24px 24px;
+  overflow-y: auto;
+  background: var(--bg-base);
+}
+.lt-book-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 8px;
+}
+.lt-book-item:last-child { margin-bottom: 0; }
+.lt-book-icon {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.lt-book-icon:empty { display: none; }
+.lt-book-info { flex: 1; }
+.lt-book-title { font-size: 16px; font-weight: 600; color: var(--t-primary); margin-bottom: 3px; }
+.lt-book-meta  { font-size: 12px; color: var(--t-tertiary); }
+
+/* Right panel — floating card sidebar */
+.lt-right {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--bg-base);
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.lt-float-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.lt-float-header { padding: 20px 20px 4px; }
+.lt-float-eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--t-tertiary); margin-bottom: 4px;
+}
+.lt-float-heading {
+  font-size: 18px; font-weight: 600;
+  color: var(--t-primary); line-height: 1.3; margin-bottom: 8px;
+}
+.lt-float-items {
+  padding: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.lt-float-item {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.lt-float-item-title { font-size: 14px; font-weight: 600; color: var(--t-primary); line-height: 1.4; margin-bottom: 6px; }
+.lt-float-item-body  { font-size: 13px; color: var(--t-secondary); line-height: 1.5; margin-bottom: 12px; }
+.lt-float-item-open {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--t-tertiary); cursor: pointer;
+  display: inline-block; transition: color 0.15s;
+}
+.lt-float-item-open:hover { color: var(--t-primary); }
+
+
+
+</style>
+</head>
+<body>
+
+<div id="lt-screens">
+
+<!-- ============================================================
+     SCREEN 0 — BOARDS OVERVIEW
+     ============================================================ -->
+<div class="lt-screen active" id="lt-screen-0">
+
+<!-- HEADER -->
+<div class="app-header">
+  <div class="app-logo">
+    <div class="app-logo-mark"><img src="Icons/D_icon.png" alt="Diligent"></div>
+    Diligent  •  Boards Cloud
+  </div>
+  <div class="app-spacer"></div>
+  <div class="app-header-nav">
+    <!-- Activity pill -->
+    <div class="app-activity-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      Recent system activity
+      <span class="app-activity-count">5</span>
+    </div>
+    <!-- Bell with notification dot -->
+    <div class="app-icon-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      <span class="app-notif-dot"></span>
+    </div>
+    <!-- Kebab menu -->
+    <div class="app-icon-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+    </div>
+    <!-- Avatar -->
+    <div class="app-avatar">AC</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     BODY
+     ============================================================ -->
+<div class="lt-body">
+
+  <!-- Main area -->
+  <div class="lt-main">
+
+    <!-- Top bar — spans full width (center + sidebar) -->
+    <div class="lt-topbar">
+      <h1 class="lt-topbar-title">Overview</h1>
+    </div>
+
+    <div class="lt-main-row">
+
+    <!-- Center column: book list -->
+    <div class="lt-center">
+
+      <!-- Left: Book list -->
+      <div class="lt-left">
+        <div class="section-title" style="margin-bottom:12px;">Books — Board materials</div>
+
+        <div class="lt-book-item">
+          <div class="lt-book-icon"></div>
+          <div class="lt-book-info">
+            <div class="lt-book-title">Audit Committee — Q1 2026 Pre-Read</div>
+            <div class="lt-book-meta">Mar 3–5 · Audit Committee</div>
+          </div>
+          <button class="btn btn-secondary btn-md"><img src="Icons/AI.svg" style="height:16px;width:16px;"> Smart summary</button>
+        </div>
+
+        <div class="lt-book-item">
+          <div class="lt-book-icon"></div>
+          <div class="lt-book-info">
+            <div class="lt-book-title">Finance Committee — Feb 27, 2026</div>
+            <div class="lt-book-meta">Feb 27 · Finance</div>
+          </div>
+        </div>
+
+        <div class="lt-book-item">
+          <div class="lt-book-icon"></div>
+          <div class="lt-book-info">
+            <div class="lt-book-title">Board Meeting Materials — Feb 19, 2026</div>
+            <div class="lt-book-meta">Feb 19 · Full Board</div>
+          </div>
+          <button class="btn btn-secondary btn-md"><img src="Icons/AI.svg" style="height:16px;width:16px;"> Smart summary</button>
+        </div>
+      </div>
+
+    </div><!-- end lt-center -->
+
+    <!-- Right: floating card sidebar — full height, runs top to bottom -->
+    <div class="lt-right">
+      <div class="lt-float-card">
+
+        <!-- Card header: eyebrow above heading, matching image style -->
+        <div class="lt-float-header">
+          <div class="lt-float-eyebrow">✦ AI Curated</div>
+          <div class="lt-float-heading">Competitor updates</div>
+        </div>
+
+        <!-- Inner item cards -->
+        <div class="lt-float-items">
+
+          <!-- Success card — report issued -->
+          <div class="lt-float-item" style="border-color:transparent;border-left:none;padding:0;background:transparent;">
+            <div class="alert-card alert-card-sm alert-card-green">
+              <div class="alert-card-content">
+                <div class="alert-card-header">
+                  <div class="alert-card-icon"><img src="Icons/Success.svg" style="width:100%;height:100%;"></div>
+                  <div class="alert-card-title">Cybersecurity report issued</div>
+                </div>
+                <div class="alert-card-sub">The audit has been completed and the final report distributed to the Audit Committee and relevant control owners.</div>
+                <div style="display:flex;justify-content:center;margin-top:8px;">
+                  <button class="btn btn-primary btn-sm" onclick="window.parent.postMessage({wfAdvance:6},'*')">View report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- News items -->
+          <div class="lt-float-item">
+            <div class="lt-float-item-title">BlackRock GIP / EQT partnership expands infrastructure reach</div>
+            <div class="lt-float-item-body">Financial Times · Feb 25, 2026</div>
+            <span class="lt-float-item-open">Open</span>
+          </div>
+
+          <div class="lt-float-item">
+            <div class="lt-float-item-title">CVC Capital raises €26B fund; Goldman Sachs joins as anchor LP</div>
+            <div class="lt-float-item-body">Bloomberg · Feb 24, 2026</div>
+            <span class="lt-float-item-open">Open</span>
+          </div>
+
+        </div><!-- end lt-float-items -->
+      </div><!-- end lt-float-card -->
+    </div><!-- end lt-right -->
+
+    </div><!-- end lt-main-row -->
+
+  </div><!-- end lt-main -->
+
+</div><!-- end lt-body -->
+
+</div><!-- end lt-screen-0 -->
+
+</div><!-- end lt-screens -->
+
+<script>
+/* Screen 0 only — no ltShow needed */
+</script>
+
+<script src="workflow-bridge.js"></script>
+</body>
+</html>
