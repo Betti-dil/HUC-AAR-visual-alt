@@ -85,7 +85,7 @@
   <span class="wf-arrow">&rarr;</span>
   <span class="wf-step" data-step="4">05. Preview and Approve</span>
   <span class="wf-arrow">&rarr;</span>
-  <span class="wf-step" data-step="5">06. Report distribution</span>
+  <span class="wf-step" data-step="5">06. Report distributed</span>
   <span class="wf-arrow">&rarr;</span>
   <span class="wf-step" data-step="6">07. Audit Report</span>
 </div>
@@ -141,7 +141,6 @@
     // "Automated Audit Reporting" on everything else
     const boardsCloudScreens = {
       0: ['lt-screen-0', 'lt-screen-1'],  // 01-Scope screens 0 and 1
-      4: ['screen-1'],           // 05-Preview-Approve approve screen only
       5: ['lt-screen-0', null], // 06-Report-Distribution
       6: [null]                 // 07-Audit-Report (no screen wrapper)
     };
@@ -161,8 +160,12 @@
       const isBoardsCloud = bcScreens && (bcScreens.includes(screenId) || (!screenParent && bcScreens.includes(null)));
       const logoText = isBoardsCloud ? 'Boards Cloud' : 'Automated Audit Reporting';
 
-      // Thomas Chen on 01-Scope, 06-Report-Distribution, and 07-Audit-Report; Alexandra everywhere else
-      const user = ((stepIndex === 0) || stepIndex === 5 || stepIndex === 6) ? thomasChen : alexandraChen;
+      // Thomas Chen on: 01-Scope screen-0 only, 06-Report-Distribution, 07-Audit-Report
+      // Alexandra Chen on everything else
+      const isThomasChen = (stepIndex === 0 && screenId === 'lt-screen-0')
+        || stepIndex === 5
+        || stepIndex === 6;
+      const user = isThomasChen ? thomasChen : alexandraChen;
 
       // Restart scan button: only show on steps 2+ (Synthesis, Veracity, Preview & Approve)
       var restartBtn = (stepIndex >= 2 && stepIndex <= 4)
